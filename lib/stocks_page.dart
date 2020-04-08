@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'bsecodes.dart';
+import 'info_page.dart';
 
 class Stocks extends StatefulWidget {
   @override
@@ -16,16 +17,38 @@ class _StocksState extends State<Stocks> {
               .toString()
               .replaceAll("{", "")
               .replaceAll("}", "")
-              .replaceAll(" ", "")
-              .split(':')[0]
+              .replaceAll(" EOD Prices", "")
+              .replaceAll("-", "")
+              .split(': ')[0]
               .toString()),
           onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return Info(
+                      bse_codes[position]
+                          .toString()
+                          .replaceAll("{", "")
+                          .replaceAll("}", "")
+                          .replaceAll(" EOD Prices", "")
+                          .replaceAll("-", "")
+                          .split(': ')[0]
+                          .toString(),
+                      bse_codes[position]
+                          .toString()
+                          .replaceAll("{", "")
+                          .replaceAll("}", "")
+                          .split(': ')[1]
+                          .toString());
+                },
+              ),
+            );
             print(bse_codes[position]
                 .toString()
                 .replaceAll("{", "")
                 .replaceAll("}", "")
-                .replaceAll(" ", "")
-                .split(':')[1]
+                .split(': ')[1]
                 .toString());
           },
         );
