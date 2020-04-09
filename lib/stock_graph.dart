@@ -38,7 +38,7 @@ class StockChart extends StatelessWidget {
           child: Column(
             children: <Widget>[
               Text(this.dataMapped["close"].toString(),
-                style: TextStyle(fontWeight: FontWeight.w800,fontSize: 46),
+                style: TextStyle(fontWeight: FontWeight.w800,fontSize: 50),
               ),
               Expanded(
                 child: charts.TimeSeriesChart(

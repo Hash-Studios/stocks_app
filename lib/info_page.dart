@@ -45,6 +45,7 @@ class _InfoState extends State<Info> {
             );
           }
           recentData = data["data0"];
+          print(recentData["dqtq"]);
           dataFetched = true;
         },
       );
@@ -77,6 +78,7 @@ class _InfoState extends State<Info> {
       ),
       body: dataFetched
           ? Column(
+              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 ClipRRect(
@@ -89,11 +91,11 @@ class _InfoState extends State<Info> {
                       Container(
                         color: Colors.white,
                         child: Padding(
-                          padding: const EdgeInsets.fromLTRB(8,4,8,4),
+                          padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
                           child: Text(
                             titleCase(widget.name),
                             style: TextStyle(
-                                fontSize: 30, fontWeight: FontWeight.bold),
+                                fontSize: 35, fontWeight: FontWeight.bold),
                             textAlign: TextAlign.left,
                           ),
                         ),
@@ -107,124 +109,195 @@ class _InfoState extends State<Info> {
                       Container(
                         color: Colors.white,
                         width: 100,
-                        height: 60,
-                        padding: EdgeInsets.all(20),
+                        height: 55,
+                        padding: EdgeInsets.fromLTRB(20, 35, 40, 0),
                         child: ClipRRect(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(15),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(15),
+                          ),
+                          child: Container(
+                            child: LinearProgressIndicator(
+                              value: recentData["dqtq"]/100,
                             ),
-                            child: Container(child: LinearProgressIndicator())),
+                          ),
+                        ),
                       ),
-                      Container(color: Colors.white,height:100,child: Text('Deliverable Quantity to Traded Quantity'),)
+                      Container(
+                        color: Colors.white,
+                        height: 80,
+                        child: Row(
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(22, 10, 6, 10),
+                              child: Text('${recentData["dqtq"].toString()}%',style: TextStyle(fontSize: 35, color: Colors.pink,fontWeight: FontWeight.bold),),
+                            ),
+                            Text(
+                              'Deliverable Quantity to Traded Quantity',
+                              style: TextStyle(fontSize: 13,fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                      )
                     ],
                   ),
                 ),
-                Container(
-                  height: 170,
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(10, 20, 6, 20),
-                        child: Card(
-                          color: Colors.blueGrey[700],
-                          child: SizedBox(
-                            width: 130,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                children: <Widget>[
-                                  Text(
-                                    'OPENING',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ],
+                Expanded(
+                  child: Container(
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(10, 20, 6, 20),
+                          child: Card(
+                            color: Colors.blueGrey[700],
+                            child: SizedBox(
+                              width: 140,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  children: <Widget>[
+                                    Text(
+                                      'OPENING',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      recentData["open"].toString(),
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 30,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(10, 20, 6, 20),
-                        child: Card(
-                          color: Colors.blueGrey[700],
-                          child: SizedBox(
-                            width: 130,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                children: <Widget>[
-                                  Text(
-                                    'OPENING',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ],
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(10, 20, 6, 20),
+                          child: Card(
+                            color: Colors.blueGrey[700],
+                            child: SizedBox(
+                              width: 140,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  children: <Widget>[
+                                    Text(
+                                      'HIGH',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      recentData["high"].toString(),
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 30,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(10, 20, 6, 20),
-                        child: Card(
-                          color: Colors.blueGrey[700],
-                          child: SizedBox(
-                            width: 130,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                children: <Widget>[
-                                  Text(
-                                    'OPENING',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ],
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(10, 20, 6, 20),
+                          child: Card(
+                            color: Colors.blueGrey[700],
+                            child: SizedBox(
+                              width: 140,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  children: <Widget>[
+                                    Text(
+                                      'LOW',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      recentData["low"].toString(),
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 30,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(10, 20, 6, 20),
-                        child: Card(
-                          color: Colors.blueGrey[700],
-                          child: SizedBox(
-                            width: 130,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                children: <Widget>[
-                                  Text(
-                                    'OPENING',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ],
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(10, 20, 6, 20),
+                          child: Card(
+                            color: Colors.blueGrey[700],
+                            child: SizedBox(
+                              width: 140,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  children: <Widget>[
+                                    Text(
+                                      'CLOSING',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      recentData["close"].toString(),
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 30,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(10, 20, 10, 20),
-                        child: Card(
-                          color: Colors.blueGrey[700],
-                          child: SizedBox(
-                            width: 130,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                children: <Widget>[
-                                  Text(
-                                    'OPENING',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ],
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(10, 20, 10, 20),
+                          child: Card(
+                            color: Colors.blueGrey[700],
+                            child: SizedBox(
+                              width: 200,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  children: <Widget>[
+                                    Text(
+                                      'TOTAL TURNOVER',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      recentData["turn"].toString(),
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 30,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 )
               ],

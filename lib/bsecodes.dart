@@ -5065,7 +5065,12 @@ class StockData {
       for (var i = 0; i < 30; i++) {
         Map dataMap = {
           'date': data[i][0].toString(),
-          'close': data[i][4]
+          'open': data[i][1],
+          'high': data[i][2],
+          'low': data[i][3],
+          'close': data[i][4],
+          'turn': data[i][8],
+          'dqtq': data[i][10]
         };
         totalData["data$i"] = dataMap;
       }
