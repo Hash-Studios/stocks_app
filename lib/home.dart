@@ -21,15 +21,15 @@ class _HomeState extends State<Home> {
   final List<Widget> _children = [
     Stocks(),
     Container(
-      color: Colors.red[100],
+      color: Colors.pink[100],
       child: Text('Your Stocks'),
     ),
     Container(
-      color: Colors.red[100],
+      color: Colors.pink[100],
       child: Text('Notifications'),
     ),
     Container(
-      color: Colors.red[100],
+      color: Colors.pink[100],
       child: Text('Profile'),
     ),
   ];
@@ -46,35 +46,35 @@ class _HomeState extends State<Home> {
         currentIndex: _currentIndex,
         items: [
           BottomNavigationBarItem(
-            activeIcon: new Icon(Icons.show_chart, color: Colors.red),
+            activeIcon: new Icon(Icons.show_chart, color: Colors.pink),
             icon: new Icon(Icons.show_chart, color: Colors.grey),
             title: new Text(
               'Stocks',
-              style: TextStyle(color: Colors.red),
+              style: TextStyle(color: Colors.pink),
             ),
           ),
           BottomNavigationBarItem(
-            activeIcon: new Icon(Icons.add_box, color: Colors.red),
+            activeIcon: new Icon(Icons.add_box, color: Colors.pink),
             icon: new Icon(Icons.add_box, color: Colors.grey),
             title: new Text(
               'Your Stocks',
-              style: TextStyle(color: Colors.red),
+              style: TextStyle(color: Colors.pink),
             ),
           ),
           BottomNavigationBarItem(
-            activeIcon: new Icon(Icons.notifications, color: Colors.red),
+            activeIcon: new Icon(Icons.notifications, color: Colors.pink),
             icon: new Icon(Icons.notifications, color: Colors.grey),
             title: new Text(
               'Notifications',
-              style: TextStyle(color: Colors.red),
+              style: TextStyle(color: Colors.pink),
             ),
           ),
           BottomNavigationBarItem(
-            activeIcon: new Icon(Icons.person, color: Colors.red),
+            activeIcon: new Icon(Icons.person, color: Colors.pink),
             icon: new Icon(Icons.person, color: Colors.grey),
             title: new Text(
               'Profile',
-              style: TextStyle(color: Colors.red),
+              style: TextStyle(color: Colors.pink),
             ),
           )
         ],

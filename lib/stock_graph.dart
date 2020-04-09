@@ -6,46 +6,52 @@ class StockSeries {
   final String date;
   final double close;
 
-  StockSeries(
-      {@required this.date,
-      @required this.close});
+  StockSeries({@required this.date, @required this.close});
 }
 
 class StockChart extends StatelessWidget {
-  final List<StockSeries> data;
+  final List<StockSeries> dataChart;
+  final Map dataMapped;
 
-  StockChart({@required this.data});
+  StockChart({@required this.dataChart,@required this.dataMapped});
 
-@override
-Widget build(BuildContext context) {
-  List<charts.Series<StockSeries, DateTime>> series = [
-    charts.Series(
-      id: "Stocks",
-      data: data,
-      domainFn: (StockSeries series, _) => DateTime(int.parse(series.date.split("-")[0]), int.parse(series.date.split("-")[1]), int.parse(series.date.split("-")[2])),
-      measureFn: (StockSeries series, _) => series.close)
+  @override
+  Widget build(BuildContext context) {
+    List<charts.Series<StockSeries, DateTime>> series = [
+      charts.Series(
+          id: "Stocks",
+          colorFn: (_, __) => charts.MaterialPalette.pink.shadeDefault,
+          data: dataChart,
+          domainFn: (StockSeries series, _) => DateTime(
+              int.parse(series.date.split("-")[0]),
+              int.parse(series.date.split("-")[1]),
+              int.parse(series.date.split("-")[2])),
+          measureFn: (StockSeries series, _) => series.close)
       // double.parse(series.date.split("-")[2])
-  ];
-  return Container(
+    ];
+    return Container(
+      color: Colors.white,
       height: 400,
-      padding: EdgeInsets.all(20),
-      child: Card(
+      child: Container(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: <Widget>[
-              Text(
-                "Stock Data",
-                style: Theme.of(context).textTheme.body2,
+              Text(this.dataMapped["close"].toString(),
+                style: TextStyle(fontWeight: FontWeight.w800,fontSize: 46),
               ),
               Expanded(
-                child: charts.TimeSeriesChart(series, animate: true),
+                child: charts.TimeSeriesChart(
+                  series,
+                  animate: true,
+                  animationDuration: Duration(milliseconds: 500),
+                  defaultRenderer:new charts.LineRendererConfig(includeArea: true, stacked: true),
+                ),
               )
             ],
           ),
         ),
       ),
     );
-}
-
+  }
 }
