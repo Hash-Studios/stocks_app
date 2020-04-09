@@ -18,12 +18,13 @@ class StockChart extends StatelessWidget {
 
 @override
 Widget build(BuildContext context) {
-  List<charts.Series<StockSeries, String>> series = [
+  List<charts.Series<StockSeries, DateTime>> series = [
     charts.Series(
       id: "Stocks",
       data: data,
-      domainFn: (StockSeries series, _) => series.date,
+      domainFn: (StockSeries series, _) => DateTime(int.parse(series.date.split("-")[0]), int.parse(series.date.split("-")[1]), int.parse(series.date.split("-")[2])),
       measureFn: (StockSeries series, _) => series.close)
+      // double.parse(series.date.split("-")[2])
   ];
   return Container(
       height: 400,
@@ -38,7 +39,7 @@ Widget build(BuildContext context) {
                 style: Theme.of(context).textTheme.body2,
               ),
               Expanded(
-                child: charts.BarChart(series, animate: true),
+                child: charts.TimeSeriesChart(series, animate: true),
               )
             ],
           ),

@@ -27,7 +27,7 @@ class _InfoState extends State<Info> {
         () {
           data = dataMap;
           dataFetched = true;
-          for (var c = 0; c < 100; c++) {
+          for (var c = 0; c < 200; c++) {
             dataList.add(
               new StockSeries(
                   date: data["data$c"]["date"], close: data["data$c"]["close"]),

@@ -5062,7 +5062,7 @@ class StockData {
       Map datasetData = fetchdata["dataset_data"];
       List data = datasetData["data"];
       Map totalData = {};
-      for (var i = 0; i < 100; i++) {
+      for (var i = 0; i < 200; i++) {
         Map dataMap = {
           'date': data[i][0].toString(),
           'close': data[i][4]
