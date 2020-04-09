@@ -4,6 +4,7 @@ import 'bsecodes.dart';
 
 Map data = {};
 Map recentData = {};
+Map lastData = {};
 bool dataFetched = false;
 List<StockSeries> dataList = [];
 
@@ -45,6 +46,7 @@ class _InfoState extends State<Info> {
             );
           }
           recentData = data["data0"];
+          lastData = data["data1"];
           print(recentData["dqtq"]);
           dataFetched = true;
         },
@@ -66,14 +68,31 @@ class _InfoState extends State<Info> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blueGrey[900],
+      backgroundColor: Colors.pink[100],
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        leading: IconButton(icon: Icon(Icons.arrow_back), onPressed: null),
+        leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back,
+              color: Colors.grey,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            }),
         actions: <Widget>[
-          IconButton(icon: Icon(Icons.search), onPressed: null),
-          IconButton(icon: Icon(Icons.more_vert), onPressed: null)
+          IconButton(
+              icon: Icon(
+                Icons.favorite_border,
+                color: Colors.grey,
+              ),
+              onPressed: null),
+          IconButton(
+              icon: Icon(
+                Icons.more_vert,
+                color: Colors.grey,
+              ),
+              onPressed: null)
         ],
       ),
       body: dataFetched
@@ -95,7 +114,9 @@ class _InfoState extends State<Info> {
                           child: Text(
                             titleCase(widget.name),
                             style: TextStyle(
-                                fontSize: 35, fontWeight: FontWeight.bold),
+                                color: Colors.black87,
+                                fontSize: 35,
+                                fontWeight: FontWeight.bold),
                             textAlign: TextAlign.left,
                           ),
                         ),
@@ -109,15 +130,16 @@ class _InfoState extends State<Info> {
                       Container(
                         color: Colors.white,
                         width: 100,
-                        height: 55,
-                        padding: EdgeInsets.fromLTRB(20, 35, 40, 0),
+                        height: 45,
+                        padding: EdgeInsets.fromLTRB(20, 25, 50, 0),
                         child: ClipRRect(
                           borderRadius: BorderRadius.all(
                             Radius.circular(15),
                           ),
                           child: Container(
                             child: LinearProgressIndicator(
-                              value: recentData["dqtq"]/100,
+                              backgroundColor: Colors.grey[200],
+                              value: recentData["dqtq"] / 100,
                             ),
                           ),
                         ),
@@ -129,11 +151,18 @@ class _InfoState extends State<Info> {
                           children: <Widget>[
                             Padding(
                               padding: const EdgeInsets.fromLTRB(22, 10, 6, 10),
-                              child: Text('${recentData["dqtq"].toString()}%',style: TextStyle(fontSize: 35, color: Colors.pink,fontWeight: FontWeight.bold),),
+                              child: Text(
+                                '${recentData["dqtq"].toString()}%',
+                                style: TextStyle(
+                                    fontSize: 35,
+                                    color: Colors.pink,
+                                    fontWeight: FontWeight.bold),
+                              ),
                             ),
                             Text(
                               'Deliverable Quantity to Traded Quantity',
-                              style: TextStyle(fontSize: 13,fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                  fontSize: 13, fontWeight: FontWeight.bold),
                             ),
                           ],
                         ),
@@ -149,25 +178,39 @@ class _InfoState extends State<Info> {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(10, 20, 6, 20),
                           child: Card(
-                            color: Colors.blueGrey[700],
+                            elevation: 0,
+                            color: Colors.pink[50],
                             child: SizedBox(
                               width: 140,
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
                                   children: <Widget>[
-                                    Text(
-                                      'OPENING',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold),
-                                    ),
                                     Text(
                                       recentData["open"].toString(),
                                       style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 30,
+                                          color: Colors.black87,
+                                          fontSize: 32,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      (recentData["open"] - lastData["open"])
+                                          .toStringAsFixed(2),
+                                      style: TextStyle(
+                                          color: recentData["open"] >=
+                                                  lastData["open"]
+                                              ? Colors.green
+                                              : Colors.red,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      'OPENING',
+                                      style: TextStyle(
+                                          color: Colors.black87,
+                                          fontSize: 18,
                                           fontWeight: FontWeight.bold),
                                     ),
                                   ],
@@ -179,25 +222,39 @@ class _InfoState extends State<Info> {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(10, 20, 6, 20),
                           child: Card(
-                            color: Colors.blueGrey[700],
+                            elevation: 0,
+                            color: Colors.pink[50],
                             child: SizedBox(
                               width: 140,
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
                                   children: <Widget>[
-                                    Text(
-                                      'HIGH',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold),
-                                    ),
                                     Text(
                                       recentData["high"].toString(),
                                       style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 30,
+                                          color: Colors.black87,
+                                          fontSize: 32,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      (recentData["high"] - lastData["high"])
+                                          .toStringAsFixed(2),
+                                      style: TextStyle(
+                                          color: recentData["high"] >=
+                                                  lastData["high"]
+                                              ? Colors.green
+                                              : Colors.red,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      'HIGH',
+                                      style: TextStyle(
+                                          color: Colors.black87,
+                                          fontSize: 18,
                                           fontWeight: FontWeight.bold),
                                     ),
                                   ],
@@ -209,25 +266,39 @@ class _InfoState extends State<Info> {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(10, 20, 6, 20),
                           child: Card(
-                            color: Colors.blueGrey[700],
+                            elevation: 0,
+                            color: Colors.pink[50],
                             child: SizedBox(
                               width: 140,
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
                                   children: <Widget>[
-                                    Text(
-                                      'LOW',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold),
-                                    ),
                                     Text(
                                       recentData["low"].toString(),
                                       style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 30,
+                                          color: Colors.black87,
+                                          fontSize: 32,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      (recentData["low"] - lastData["low"])
+                                          .toStringAsFixed(2),
+                                      style: TextStyle(
+                                          color: recentData["low"] >=
+                                                  lastData["low"]
+                                              ? Colors.green
+                                              : Colors.red,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      'LOW',
+                                      style: TextStyle(
+                                          color: Colors.black87,
+                                          fontSize: 18,
                                           fontWeight: FontWeight.bold),
                                     ),
                                   ],
@@ -239,25 +310,39 @@ class _InfoState extends State<Info> {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(10, 20, 6, 20),
                           child: Card(
-                            color: Colors.blueGrey[700],
+                            elevation: 0,
+                            color: Colors.pink[50],
                             child: SizedBox(
                               width: 140,
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
                                   children: <Widget>[
-                                    Text(
-                                      'CLOSING',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold),
-                                    ),
                                     Text(
                                       recentData["close"].toString(),
                                       style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 30,
+                                          color: Colors.black87,
+                                          fontSize: 32,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      (recentData["close"] - lastData["close"])
+                                          .toStringAsFixed(2),
+                                      style: TextStyle(
+                                          color: recentData["close"] >=
+                                                  lastData["close"]
+                                              ? Colors.green
+                                              : Colors.red,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      'CLOSING',
+                                      style: TextStyle(
+                                          color: Colors.black87,
+                                          fontSize: 18,
                                           fontWeight: FontWeight.bold),
                                     ),
                                   ],
@@ -269,25 +354,39 @@ class _InfoState extends State<Info> {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(10, 20, 10, 20),
                           child: Card(
-                            color: Colors.blueGrey[700],
+                            elevation: 0,
+                            color: Colors.pink[50],
                             child: SizedBox(
                               width: 200,
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
                                   children: <Widget>[
-                                    Text(
-                                      'TOTAL TURNOVER',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold),
-                                    ),
                                     Text(
                                       recentData["turn"].toString(),
                                       style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 30,
+                                          color: Colors.black87,
+                                          fontSize: 32,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      (recentData["turn"] - lastData["turn"])
+                                          .toStringAsFixed(2),
+                                      style: TextStyle(
+                                          color: recentData["turn"] >=
+                                                  lastData["turn"]
+                                              ? Colors.green
+                                              : Colors.red,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      'TOTAL TURNOVER',
+                                      style: TextStyle(
+                                          color: Colors.black87,
+                                          fontSize: 18,
                                           fontWeight: FontWeight.bold),
                                     ),
                                   ],
