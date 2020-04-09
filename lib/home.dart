@@ -37,8 +37,12 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.pink[200],
       appBar: AppBar(
-        title: Text(widget.title),
+        elevation: 0,
+        actions: <Widget>[IconButton(icon: Icon(Icons.more_vert,color: Colors.white,), onPressed: null)],
+        backgroundColor: Colors.pink[300],
+        title: Text(widget.title,style: TextStyle(color: Colors.white,fontSize: 35,fontWeight: FontWeight.bold),),
       ),
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(

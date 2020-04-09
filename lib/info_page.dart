@@ -372,8 +372,8 @@ class _InfoState extends State<Info> {
                                           fontWeight: FontWeight.bold),
                                     ),
                                     Text(
-                                      (recentData["turn"] - lastData["turn"])
-                                          .toStringAsFixed(2),
+                                      '${((recentData["turn"] - lastData["turn"])/lastData["turn"])
+                                          .toStringAsFixed(2)}%',
                                       style: TextStyle(
                                           color: recentData["turn"] >=
                                                   lastData["turn"]
