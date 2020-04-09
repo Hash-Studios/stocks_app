@@ -7,6 +7,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Stock Market',
       theme: ThemeData(
         primarySwatch: Colors.red,
@@ -15,3 +16,5 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+

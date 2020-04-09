@@ -5056,21 +5056,20 @@ class StockData {
   Future getdata(String code) async {
     String fetchUrl =
         "https://www.quandl.com/api/v3/datasets/BSE/$code/data.json?api_key=wrCX6Fs2x_M-ZyJ8aPQX";
-    print(fetchUrl);
     http.Response response = await http.get(fetchUrl);
     if (response.statusCode == 200) {
       var fetchdata = jsonDecode(response.body);
       Map datasetData = fetchdata["dataset_data"];
       List data = datasetData["data"];
-      List totalData = [];
+      Map totalData = {};
       for (var i = 0; i < 100; i++) {
         Map dataMap = {
           'date': data[i][0].toString(),
-          'close': data[i][4].toString()
+          'close': data[i][4]
         };
-        totalData.add(dataMap);
+        totalData["data$i"] = dataMap;
       }
-      return totalData.toString();
+      return totalData;
     } else {
       print(response.statusCode);
       throw 'cant fetch data';
