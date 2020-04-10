@@ -22,6 +22,7 @@ APK File : `application/apk-release.apk`
 1. HTTP Package for data Fetch`http: ^0.12.0+4`
 2. Charts Flutter Package for data graphs `charts_flutter: ^0.9.0`
 3. Random Color Package for stocks avatar generation `random_color: ^1.0.5`
+4. StatusBar Color Package to change StatusBar color `flutter_statusbarcolor: ^0.2.3`
 
 ## Todo
 
@@ -31,8 +32,13 @@ APK File : `application/apk-release.apk`
 - [x] Show stocks closing value on home page
 - [ ] Add time option to graph
 - [x] Search between available stocks
-- [ ] Fix stocks' closing value on home page
-- [ ] Add change value on home page
+- [x] Fix stocks' closing value on home page
+- [x] Add change value on home page
 - [ ] Add Hero animations
+- [ ] Add data cache
+- [ ] Hidden Search TextField
+- [x] Fix StatusBar color
+- [ ] Add Custom Themes
+- [ ] Add settings page
 
 Design inspired by [CMARIX TechnoLabs](https://www.behance.net/CMARIXTechnoLabs)

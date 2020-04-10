@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:random_color/random_color.dart';
 import 'bsecodes.dart';
 import 'info_page.dart';
 
 RandomColor _randomColor = RandomColor();
 Color color1 = _randomColor.randomColor(
-    colorHue: ColorHue.pink, colorBrightness: ColorBrightness.light);
+    colorSaturation: ColorSaturation.lowSaturation,
+    colorHue: ColorHue.pink,
+    colorBrightness: ColorBrightness.light);
 Color color2 = _randomColor.randomColor(
-    colorHue: ColorHue.pink, colorBrightness: ColorBrightness.light);
+    colorSaturation: ColorSaturation.highSaturation,
+    colorHue: ColorHue.pink,
+    colorBrightness: ColorBrightness.light);
 Map dataAll = {};
-Map recentDataAll = {};
+Map lastDataAll = {};
 List<bool> dataFetched = [
   false,
   false,
@@ -5052,7 +5057,7 @@ class _StocksState extends State<Stocks> {
     if (query.isNotEmpty) {
       List<String> dummyListData = List<String>();
       dummySearchList.forEach((item) {
-        if (item.contains(query)) {
+        if (item.toLowerCase().contains(query.toLowerCase())) {
           dummyListData.add(item);
         }
       });
@@ -5072,7 +5077,7 @@ class _StocksState extends State<Stocks> {
   StockData stock = StockData();
 
   void getstock() async {
-    for (int b = 0; b < bse_codes.length; b++) {
+    for (int b = 0; b < 20; b++) {
       try {
         Map dataMap = await stock.getdata(bse_codes[b]
             .toString()
@@ -5083,6 +5088,7 @@ class _StocksState extends State<Stocks> {
         setState(
           () {
             dataAll["stock$b"] = dataMap["data0"];
+            lastDataAll["stock$b"] = dataMap["data1"];
             dataFetched[b] = true;
           },
         );
@@ -5127,145 +5133,183 @@ class _StocksState extends State<Stocks> {
           ),
         ),
         Expanded(
-          child: ListView.builder(
-            shrinkWrap: true,
-            itemCount: items.length,
-            itemBuilder: (context, position) {
-              return Padding(
-                padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return Info(
-                              bse_codes[bse_names.indexOf(items[position])]
-                                  .toString()
-                                  .replaceAll("{", "")
-                                  .replaceAll("}", "")
-                                  .replaceAll(" EOD Prices", "")
-                                  .replaceAll("-", "")
-                                  .split(': ')[0]
-                                  .toString(),
-                              bse_codes[bse_names.indexOf(items[position])]
-                                  .toString()
-                                  .replaceAll("{", "")
-                                  .replaceAll("}", "")
-                                  .split(': ')[1]
-                                  .toString());
-                        },
-                      ),
-                    );
-                    print(bse_codes[bse_names.indexOf(items[position])]
-                        .toString()
-                        .replaceAll("{", "")
-                        .replaceAll("}", "")
-                        .split(': ')[1]
-                        .toString());
-                  },
-                  child: Card(
-                    color: Colors.white,
-                    elevation: 0,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: SizedBox(
-                                height: 70,
-                                width: 70,
-                                child: Stack(
-                                  alignment: Alignment.center,
+          child: Scrollbar(
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: items.length,
+              itemBuilder: (context, position) {
+                return Padding(
+                  padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                          builder: (context) {
+                            return Info(
+                                bse_codes[bse_names.indexOf(items[position])]
+                                    .toString()
+                                    .replaceAll("{", "")
+                                    .replaceAll("}", "")
+                                    .replaceAll(" EOD Prices", "")
+                                    .replaceAll("-", "")
+                                    .split(': ')[0]
+                                    .toString(),
+                                bse_codes[bse_names.indexOf(items[position])]
+                                    .toString()
+                                    .replaceAll("{", "")
+                                    .replaceAll("}", "")
+                                    .split(': ')[1]
+                                    .toString());
+                          },
+                        ),
+                      );
+                      print(bse_codes[bse_names.indexOf(items[position])]
+                          .toString()
+                          .replaceAll("{", "")
+                          .replaceAll("}", "")
+                          .split(': ')[1]
+                          .toString());
+                    },
+                    child: Card(
+                      color: Colors.pink[50],
+                      elevation: 2,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: SizedBox(
+                                  height: 70,
+                                  width: 70,
+                                  child: Stack(
+                                    alignment: Alignment.center,
+                                    children: <Widget>[
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(5)),
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                              gradient: LinearGradient(
+                                                  begin: Alignment.topLeft,
+                                                  end: Alignment.bottomRight,
+                                                  colors: [color1, color2])),
+                                          child:
+                                              SizedBox(width: 70, height: 70),
+                                        ),
+                                      ),
+                                      // InitialNameAvatar(
+                                      //   items[position],
+                                      //   circleAvatar: true,
+                                      //   backgroundColor: _randomColor.randomColor(
+                                      //       colorBrightness: ColorBrightness.light),
+                                      //   foregroundColor: Colors.black12,
+                                      //   textSize: 25.0,
+                                      // ),
+                                      Text(
+                                        getInitials(items[position]),
+                                        style: TextStyle(
+                                            fontSize: 25,
+                                            color: Colors.black12),
+                                      ),
+                                      dataFetched[position]
+                                          ? Text('')
+                                          : CircularProgressIndicator(
+                                              valueColor:
+                                                  AlwaysStoppedAnimation(
+                                                      Colors.white12),
+                                            ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(6),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
-                                    ClipRRect(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(5)),
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                            gradient: LinearGradient(
-                                                begin: Alignment.topLeft,
-                                                end: Alignment.bottomRight,
-                                                colors: [color1,color2])),
-                                        child: SizedBox(width: 70, height: 70),
+                                    SizedBox(
+                                      width: 270,
+                                      child: Text(
+                                        titleCase(items[position])
+                                            .replaceAll(" Ltd.", "")
+                                            .replaceAll(" Ltd", "")
+                                            .replaceAll(".ltd.", ""),
+                                        style: TextStyle(
+                                            color: Colors.black87,
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 18),
                                       ),
                                     ),
-                                    // InitialNameAvatar(
-                                    //   items[position],
-                                    //   circleAvatar: true,
-                                    //   backgroundColor: _randomColor.randomColor(
-                                    //       colorBrightness: ColorBrightness.light),
-                                    //   foregroundColor: Colors.black12,
-                                    //   textSize: 25.0,
-                                    // ),
                                     Text(
-                                      getInitials(items[position]),
+                                      items[position],
                                       style: TextStyle(
-                                          fontSize: 25, color: Colors.black12),
+                                          color: Colors.black87,
+                                          fontWeight: FontWeight.w300,
+                                          fontSize: 12),
                                     ),
-                                    dataFetched[position] ? Text('') : CircularProgressIndicator(),
+                                    Row(
+                                      children: <Widget>[
+                                        Text(
+                                          dataFetched[bse_names
+                                                  .indexOf(items[position])]
+                                              ? dataAll["stock${bse_names.indexOf(items[position])}"]
+                                                      ["close"]
+                                                  .toString()
+                                              : '',
+                                          style: TextStyle(
+                                              color: Colors.pink,
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 12),
+                                        ),
+                                        Text(' '),
+                                        Text(
+                                          dataFetched[bse_names
+                                                  .indexOf(items[position])]
+                                              ? " ${(dataAll["stock${bse_names.indexOf(items[position])}"]["close"] - lastDataAll["stock${bse_names.indexOf(items[position])}"]["close"]).toStringAsFixed(2)} "
+                                              : '',
+                                          style: TextStyle(
+                                              backgroundColor: dataFetched[
+                                                      bse_names.indexOf(
+                                                          items[position])]
+                                                  ? dataAll["stock${bse_names.indexOf(items[position])}"]
+                                                              ["close"] >=
+                                                          lastDataAll[
+                                                                  "stock${bse_names.indexOf(items[position])}"]
+                                                              ["close"]
+                                                      ? Colors.green
+                                                      : Colors.red
+                                                  : Colors.white,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 12),
+                                        ),
+                                      ],
+                                    ),
                                   ],
                                 ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(6),
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  SizedBox(
-                                    width: 270,
-                                    child: Text(
-                                      titleCase(items[position])
-                                          .replaceAll(" Ltd.", "")
-                                          .replaceAll(" Ltd", "")
-                                          .replaceAll(".ltd.", ""),
-                                      style: TextStyle(
-                                          color: Colors.black87,
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 18),
-                                    ),
-                                  ),
-                                  Text(
-                                    items[position],
-                                    style: TextStyle(
-                                        color: Colors.black87,
-                                        fontWeight: FontWeight.w300,
-                                        fontSize: 12),
-                                  ),
-                                  Text(
-                                    dataFetched[position]
-                                        ? dataAll["stock$position"]["close"]
-                                            .toString()
-                                        : '',
-                                    style: TextStyle(
-                                        color: Colors.pink,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 12),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                        Column(
-                          children: <Widget>[
-                            IconButton(
-                              icon: Icon(Icons.favorite_border),
-                            )
-                          ],
-                        )
-                      ],
+                            ],
+                          ),
+                          Column(
+                            children: <Widget>[
+                              IconButton(
+                                icon: Icon(Icons.favorite_border),
+                              )
+                            ],
+                          )
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              );
-            },
+                );
+              },
+            ),
           ),
         ),
       ],

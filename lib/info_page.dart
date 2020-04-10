@@ -100,74 +100,93 @@ class _InfoState extends State<Info> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                ClipRRect(
-                  borderRadius: BorderRadius.only(
-                    bottomRight: Radius.circular(150),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: <Widget>[
-                      Container(
-                        color: Colors.white,
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
-                          child: Text(
-                            titleCase(widget.name),
-                            style: TextStyle(
-                                color: Colors.black87,
-                                fontSize: 35,
-                                fontWeight: FontWeight.bold),
-                            textAlign: TextAlign.left,
-                          ),
-                        ),
-                      ),
-                      Center(
-                        child: StockChart(
-                          dataChart: dataList,
-                          dataMapped: recentData,
-                        ),
-                      ),
-                      Container(
-                        color: Colors.white,
-                        width: 100,
-                        height: 45,
-                        padding: EdgeInsets.fromLTRB(20, 25, 50, 0),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(15),
-                          ),
-                          child: Container(
-                            child: LinearProgressIndicator(
-                              backgroundColor: Colors.grey[200],
-                              value: recentData["dqtq"] / 100,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        color: Colors.white,
-                        height: 80,
-                        child: Row(
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(22, 10, 6, 10),
-                              child: Text(
-                                '${recentData["dqtq"].toString()}%',
-                                style: TextStyle(
-                                    fontSize: 35,
-                                    color: Colors.pink,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                            Text(
-                              'Deliverable Quantity to Traded Quantity',
-                              style: TextStyle(
-                                  fontSize: 13, fontWeight: FontWeight.bold),
-                            ),
-                          ],
+                Container(
+                  decoration: new BoxDecoration(
+                    shape: BoxShape.rectangle,
+                    borderRadius:
+                        BorderRadius.only(bottomRight: Radius.circular(150)),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black26,
+                        blurRadius: 2.0, // soften the shadow
+                        spreadRadius: 1.0, //extend the shadow
+                        offset: Offset(
+                          0.0, // Move to right 10  horizontally
+                          2.0, // Move to bottom 10 Vertically
                         ),
                       )
                     ],
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.only(
+                      bottomRight: Radius.circular(150),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        Container(
+                          color: Colors.white,
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
+                            child: Text(
+                              titleCase(widget.name),
+                              style: TextStyle(
+                                  color: Colors.black87,
+                                  fontSize: 35,
+                                  fontWeight: FontWeight.bold),
+                              textAlign: TextAlign.left,
+                            ),
+                          ),
+                        ),
+                        Center(
+                          child: StockChart(
+                            dataChart: dataList,
+                            dataMapped: recentData,
+                          ),
+                        ),
+                        Container(
+                          color: Colors.white,
+                          width: 100,
+                          height: 45,
+                          padding: EdgeInsets.fromLTRB(20, 25, 50, 0),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(15),
+                            ),
+                            child: Container(
+                              child: LinearProgressIndicator(
+                                backgroundColor: Colors.grey[200],
+                                value: recentData["dqtq"] / 100,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          color: Colors.white,
+                          height: 80,
+                          child: Row(
+                            children: <Widget>[
+                              Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(22, 10, 6, 10),
+                                child: Text(
+                                  '${recentData["dqtq"].toString()}%',
+                                  style: TextStyle(
+                                      fontSize: 35,
+                                      color: Colors.pink,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              Text(
+                                'Deliverable Quantity to Traded Quantity',
+                                style: TextStyle(
+                                    fontSize: 13, fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
                 Expanded(
@@ -178,7 +197,7 @@ class _InfoState extends State<Info> {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(10, 20, 6, 20),
                           child: Card(
-                            elevation: 0,
+                            elevation: 2,
                             color: Colors.pink[50],
                             child: SizedBox(
                               width: 140,
@@ -222,7 +241,7 @@ class _InfoState extends State<Info> {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(10, 20, 6, 20),
                           child: Card(
-                            elevation: 0,
+                            elevation: 2,
                             color: Colors.pink[50],
                             child: SizedBox(
                               width: 140,
@@ -266,7 +285,7 @@ class _InfoState extends State<Info> {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(10, 20, 6, 20),
                           child: Card(
-                            elevation: 0,
+                            elevation: 2,
                             color: Colors.pink[50],
                             child: SizedBox(
                               width: 140,
@@ -310,7 +329,7 @@ class _InfoState extends State<Info> {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(10, 20, 6, 20),
                           child: Card(
-                            elevation: 0,
+                            elevation: 2,
                             color: Colors.pink[50],
                             child: SizedBox(
                               width: 140,
@@ -354,7 +373,7 @@ class _InfoState extends State<Info> {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(10, 20, 10, 20),
                           child: Card(
-                            elevation: 0,
+                            elevation: 2,
                             color: Colors.pink[50],
                             child: SizedBox(
                               width: 200,
@@ -372,8 +391,7 @@ class _InfoState extends State<Info> {
                                           fontWeight: FontWeight.bold),
                                     ),
                                     Text(
-                                      '${((recentData["turn"] - lastData["turn"])/lastData["turn"])
-                                          .toStringAsFixed(2)}%',
+                                      '${((recentData["turn"] - lastData["turn"]) / lastData["turn"]).toStringAsFixed(2)}%',
                                       style: TextStyle(
                                           color: recentData["turn"] >=
                                                   lastData["turn"]
@@ -401,148 +419,236 @@ class _InfoState extends State<Info> {
                 )
               ],
             )
-          : Container(
-              color: Colors.white,
-              child: Column(
-                children: <Widget>[
-                  Expanded(
-                    flex: 70,
-                    child: Center(
-                      child: CircularProgressIndicator(),
+          : Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Container(
+                  decoration: new BoxDecoration(
+                    shape: BoxShape.rectangle,
+                    borderRadius:
+                        BorderRadius.only(bottomRight: Radius.circular(150)),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black26,
+                        blurRadius: 2.0, // soften the shadow
+                        spreadRadius: 1.0, //extend the shadow
+                        offset: Offset(
+                          0.0, // Move to right 10  horizontally
+                          2.0, // Move to bottom 10 Vertically
+                        ),
+                      )
+                    ],
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.only(
+                      bottomRight: Radius.circular(150),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        Container(
+                          color: Colors.white,
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
+                            child: Text(
+                              titleCase(widget.name),
+                              style: TextStyle(
+                                  color: Colors.black12,
+                                  fontSize: 35,
+                                  fontWeight: FontWeight.bold),
+                              textAlign: TextAlign.left,
+                            ),
+                          ),
+                        ),
+                        Center(
+                          child: Container(
+                            color: Colors.white,
+                            child: SizedBox(
+                              height: 400,
+                              width: MediaQuery.of(context).size.width,
+                              child: Padding(
+                                padding: const EdgeInsets.fromLTRB(
+                                    205, 180, 205, 180),
+                                child: CircularProgressIndicator(),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          color: Colors.white,
+                          width: 100,
+                          height: 45,
+                          padding: EdgeInsets.fromLTRB(20, 25, 50, 0),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(15),
+                            ),
+                            child: Container(
+                              child: LinearProgressIndicator(
+                                backgroundColor: Colors.grey[200],
+                              ),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          color: Colors.white,
+                          height: 80,
+                          child: Row(
+                            children: <Widget>[
+                              Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(22, 10, 6, 10),
+                                child: Text(
+                                  '       ',
+                                  style: TextStyle(
+                                      fontSize: 35,
+                                      color: Colors.pink,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              Text(
+                                '       ',
+                                style: TextStyle(
+                                    fontSize: 13, fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
                     ),
                   ),
-                  Expanded(
-                    flex: 30,
-                    child: Container(
-                      child: ListView(
-                        scrollDirection: Axis.horizontal,
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(10, 20, 6, 20),
-                            child: Card(
-                              elevation: 0,
-                              color: Colors.pink[50],
-                              child: SizedBox(
-                                width: 140,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: <Widget>[
-                                      CircularProgressIndicator(
-                                        valueColor:
-                                            new AlwaysStoppedAnimation<Color>(
-                                                Colors.pink[100]),
-                                      )
-                                    ],
-                                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(10, 20, 6, 20),
+                          child: Card(
+                            elevation: 2,
+                            color: Colors.pink[50],
+                            child: SizedBox(
+                              width: 140,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: <Widget>[
+                                    CircularProgressIndicator(
+                                      valueColor:
+                                          new AlwaysStoppedAnimation<Color>(
+                                              Colors.pink[100]),
+                                    )
+                                  ],
                                 ),
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(10, 20, 6, 20),
-                            child: Card(
-                              elevation: 0,
-                              color: Colors.pink[50],
-                              child: SizedBox(
-                                width: 140,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: <Widget>[
-                                      CircularProgressIndicator(
-                                        valueColor:
-                                            new AlwaysStoppedAnimation<Color>(
-                                                Colors.pink[100]),
-                                      )
-                                    ],
-                                  ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(10, 20, 6, 20),
+                          child: Card(
+                            elevation: 2,
+                            color: Colors.pink[50],
+                            child: SizedBox(
+                              width: 140,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: <Widget>[
+                                    CircularProgressIndicator(
+                                      valueColor:
+                                          new AlwaysStoppedAnimation<Color>(
+                                              Colors.pink[100]),
+                                    )
+                                  ],
                                 ),
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(10, 20, 6, 20),
-                            child: Card(
-                              elevation: 0,
-                              color: Colors.pink[50],
-                              child: SizedBox(
-                                width: 140,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: <Widget>[
-                                      CircularProgressIndicator(
-                                        valueColor:
-                                            new AlwaysStoppedAnimation<Color>(
-                                                Colors.pink[100]),
-                                      )
-                                    ],
-                                  ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(10, 20, 6, 20),
+                          child: Card(
+                            elevation: 2,
+                            color: Colors.pink[50],
+                            child: SizedBox(
+                              width: 140,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: <Widget>[
+                                    CircularProgressIndicator(
+                                      valueColor:
+                                          new AlwaysStoppedAnimation<Color>(
+                                              Colors.pink[100]),
+                                    )
+                                  ],
                                 ),
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(10, 20, 6, 20),
-                            child: Card(
-                              elevation: 0,
-                              color: Colors.pink[50],
-                              child: SizedBox(
-                                width: 140,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: <Widget>[
-                                      CircularProgressIndicator(
-                                        valueColor:
-                                            new AlwaysStoppedAnimation<Color>(
-                                                Colors.pink[100]),
-                                      )
-                                    ],
-                                  ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(10, 20, 6, 20),
+                          child: Card(
+                            elevation: 2,
+                            color: Colors.pink[50],
+                            child: SizedBox(
+                              width: 140,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: <Widget>[
+                                    CircularProgressIndicator(
+                                      valueColor:
+                                          new AlwaysStoppedAnimation<Color>(
+                                              Colors.pink[100]),
+                                    )
+                                  ],
                                 ),
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(10, 20, 10, 20),
-                            child: Card(
-                              elevation: 0,
-                              color: Colors.pink[50],
-                              child: SizedBox(
-                                width: 200,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: <Widget>[
-                                      CircularProgressIndicator(
-                                        valueColor:
-                                            new AlwaysStoppedAnimation<Color>(
-                                                Colors.pink[100]),
-                                      )
-                                    ],
-                                  ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(10, 20, 10, 20),
+                          child: Card(
+                            elevation: 2,
+                            color: Colors.pink[50],
+                            child: SizedBox(
+                              width: 200,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: <Widget>[
+                                    CircularProgressIndicator(
+                                      valueColor:
+                                          new AlwaysStoppedAnimation<Color>(
+                                              Colors.pink[100]),
+                                    )
+                                  ],
                                 ),
                               ),
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  )
-                ],
-              ),
+                  ),
+                )
+              ],
             ),
     );
   }

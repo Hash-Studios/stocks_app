@@ -1,3 +1,4 @@
+import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:flutter/material.dart';
 import 'home.dart';
 
@@ -14,6 +15,8 @@ class MyBehavior extends ScrollBehavior {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    FlutterStatusbarcolor.setStatusBarColor(Colors.white);
+    FlutterStatusbarcolor.setStatusBarWhiteForeground(false);
     return MaterialApp(
       builder: (context, child) {
         return ScrollConfiguration(
