@@ -13,7 +13,7 @@ class StockChart extends StatelessWidget {
   final List<StockSeries> dataChart;
   final Map dataMapped;
 
-  StockChart({@required this.dataChart,@required this.dataMapped});
+  StockChart({@required this.dataChart, @required this.dataMapped});
 
   @override
   Widget build(BuildContext context) {
@@ -37,15 +37,17 @@ class StockChart extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: <Widget>[
-              Text(this.dataMapped["close"].toString(),
-                style: TextStyle(fontWeight: FontWeight.w800,fontSize: 50),
+              Text(
+                this.dataMapped["close"].toString(),
+                style: TextStyle(fontWeight: FontWeight.w800, fontSize: 50),
               ),
               Expanded(
                 child: charts.TimeSeriesChart(
                   series,
                   animate: true,
                   animationDuration: Duration(milliseconds: 500),
-                  defaultRenderer:new charts.LineRendererConfig(includeArea: true, stacked: true),
+                  defaultRenderer: new charts.LineRendererConfig(
+                      includeArea: true, stacked: true),
                 ),
               )
             ],
