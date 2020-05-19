@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:random_color/random_color.dart';
+import 'package:stocks_app/grid_graph.dart';
 import 'bsecodes.dart';
 import 'info_page.dart';
 
@@ -13,6 +14,7 @@ Color color2 = _randomColor.randomColor(
     colorSaturation: ColorSaturation.highSaturation,
     colorHue: ColorHue.pink,
     colorBrightness: ColorBrightness.light);
+Map<String, List<GridSeries>> graphs = {};
 Map dataAll = {};
 Map lastDataAll = {};
 List<bool> dataFetched = [
@@ -5085,13 +5087,26 @@ class _StocksState extends State<Stocks> {
             .replaceAll("}", "")
             .split(': ')[1]
             .toString());
+
         setState(
           () {
             dataAll["stock$b"] = dataMap["data0"];
             lastDataAll["stock$b"] = dataMap["data1"];
-            dataFetched[b] = true;
+            graphs["stock$b"] = new List();
           },
         );
+
+        for (var c = 0; c < 30; c++) {
+          graphs["stock$b"].add(
+            new GridSeries(
+                date: dataMap["data$c"]["date"],
+                close: dataMap["data$c"]["close"]),
+          );
+        }
+        // print("Graph is " + graphs.toString());
+        setState(() {
+          dataFetched[b] = true;
+        });
         // print(data["data0"].toString());
       } catch (e) {
         print(e);
@@ -5144,162 +5159,209 @@ class _StocksState extends State<Stocks> {
               itemBuilder: (context, position) {
                 return Padding(
                   padding: const EdgeInsets.fromLTRB(4, 4, 4, 4),
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        CupertinoPageRoute(
-                          builder: (context) {
-                            return Info(
-                                bse_codes[bse_names.indexOf(items[position])]
-                                    .toString()
-                                    .replaceAll("{", "")
-                                    .replaceAll("}", "")
-                                    .replaceAll(" EOD Prices", "")
-                                    .replaceAll("-", "")
-                                    .split(': ')[0]
-                                    .toString(),
-                                bse_codes[bse_names.indexOf(items[position])]
-                                    .toString()
-                                    .replaceAll("{", "")
-                                    .replaceAll("}", "")
-                                    .split(': ')[1]
-                                    .toString());
-                          },
-                        ),
-                      );
-                      print(bse_codes[bse_names.indexOf(items[position])]
-                          .toString()
-                          .replaceAll("{", "")
-                          .replaceAll("}", "")
-                          .split(': ')[1]
-                          .toString());
-                    },
-                    child: Card(
-                      color: Colors.pink[50],
-                      elevation: 2,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: SizedBox(
-                              height: 195,
-                              width: 195,
-                              child: Stack(
-                                alignment: Alignment.center,
-                                children: <Widget>[
-                                  ClipRRect(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(5)),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                          gradient: LinearGradient(
-                                              begin: Alignment.topLeft,
-                                              end: Alignment.bottomRight,
-                                              colors: [color1, color2])),
-                                      child: SizedBox(width: 195, height: 195),
-                                    ),
-                                  ),
-                                  // InitialNameAvatar(
-                                  //   items[position],
-                                  //   circleAvatar: true,
-                                  //   backgroundColor: _randomColor.randomColor(
-                                  //       colorBrightness: ColorBrightness.light),
-                                  //   foregroundColor: Colors.black12,
-                                  //   textSize: 25.0,
-                                  // ),
-                                  Text(
-                                    getInitials(items[position]),
-                                    style: TextStyle(
-                                        fontSize: 25, color: Colors.black12),
-                                  ),
-                                  Align(
-                                    alignment: Alignment.bottomRight,
-                                    child: IconButton(
-                                      icon: Icon(Icons.favorite_border),
-                                    ),
-                                  ),
-                                  dataFetched[position]
-                                      ? Text('')
-                                      : CircularProgressIndicator(
-                                          valueColor: AlwaysStoppedAnimation(
-                                              Colors.white12),
-                                        ),
-                                ],
-                              ),
+                  child: Stack(
+                    children: <Widget>[
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) {
+                                return Info(
+                                    bse_codes[
+                                            bse_names.indexOf(items[position])]
+                                        .toString()
+                                        .replaceAll("{", "")
+                                        .replaceAll("}", "")
+                                        .replaceAll(" EOD Prices", "")
+                                        .replaceAll("-", "")
+                                        .split(': ')[0]
+                                        .toString(),
+                                    bse_codes[
+                                            bse_names.indexOf(items[position])]
+                                        .toString()
+                                        .replaceAll("{", "")
+                                        .replaceAll("}", "")
+                                        .split(': ')[1]
+                                        .toString());
+                              },
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(6),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                SizedBox(
-                                  width: 270,
-                                  child: Text(
-                                    titleCase(items[position])
-                                        .replaceAll(" Ltd.", "")
-                                        .replaceAll(" Ltd", "")
-                                        .replaceAll(".ltd.", ""),
-                                    style: TextStyle(
-                                        color: Colors.black87,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 18),
-                                  ),
-                                ),
-                                Text(
-                                  items[position],
-                                  style: TextStyle(
-                                      color: Colors.black87,
-                                      fontWeight: FontWeight.w300,
-                                      fontSize: 12),
-                                ),
-                                Row(
-                                  children: <Widget>[
-                                    Text(
+                          );
+                          print(bse_codes[bse_names.indexOf(items[position])]
+                              .toString()
+                              .replaceAll("{", "")
+                              .replaceAll("}", "")
+                              .split(': ')[1]
+                              .toString());
+                        },
+                        child: Card(
+                          color: Colors.pink[50],
+                          elevation: 2,
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: SizedBox(
+                                  height: 195,
+                                  width: 195,
+                                  child: Stack(
+                                    alignment: Alignment.center,
+                                    children: <Widget>[
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(5)),
+                                        child: Container(
+                                          decoration: dataFetched[bse_names
+                                                  .indexOf(items[position])]
+                                              ? BoxDecoration(
+                                                  color: Colors.white)
+                                              : BoxDecoration(
+                                                  gradient: LinearGradient(
+                                                      begin: Alignment.topLeft,
+                                                      end:
+                                                          Alignment.bottomRight,
+                                                      colors: [
+                                                      color1,
+                                                      color2
+                                                    ])),
+                                          child:
+                                              SizedBox(width: 195, height: 195),
+                                        ),
+                                      ),
+                                      // InitialNameAvatar(
+                                      //   items[position],
+                                      //   circleAvatar: true,
+                                      //   backgroundColor: _randomColor.randomColor(
+                                      //       colorBrightness: ColorBrightness.light),
+                                      //   foregroundColor: Colors.black12,
+                                      //   textSize: 25.0,
+                                      // ),
                                       dataFetched[bse_names
                                               .indexOf(items[position])]
-                                          ? dataAll["stock${bse_names.indexOf(items[position])}"]
-                                                  ["close"]
-                                              .toString()
-                                          : '',
+                                          ? Align(
+                                              alignment: Alignment.topCenter,
+                                              child: Text(
+                                                getInitials(items[position]),
+                                                style: TextStyle(
+                                                    fontSize: 25,
+                                                    color: Colors.black87),
+                                              ),
+                                            )
+                                          : Text(
+                                              getInitials(items[position]),
+                                              style: TextStyle(
+                                                  fontSize: 25,
+                                                  color: Colors.black87),
+                                            ),
+
+                                      dataFetched[bse_names
+                                              .indexOf(items[position])]
+                                          ? GridChart(
+                                              dataChart: graphs[
+                                                  "stock${bse_names.indexOf(items[position])}"],
+                                            )
+                                          : CircularProgressIndicator(
+                                              valueColor:
+                                                  AlwaysStoppedAnimation(
+                                                      Colors.white12),
+                                            ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(6),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    SizedBox(
+                                      width: 270,
+                                      child: Text(
+                                        titleCase(items[position])
+                                            .replaceAll(" Ltd.", "")
+                                            .replaceAll(" Ltd", "")
+                                            .replaceAll(".ltd.", ""),
+                                        style: TextStyle(
+                                            color: Colors.black87,
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 18),
+                                      ),
+                                    ),
+                                    Text(
+                                      items[position],
                                       style: TextStyle(
-                                          color: Colors.pink,
-                                          fontWeight: FontWeight.w500,
+                                          color: Colors.black87,
+                                          fontWeight: FontWeight.w300,
                                           fontSize: 12),
                                     ),
-                                    Text(' '),
-                                    Text(
-                                      dataFetched[bse_names
-                                              .indexOf(items[position])]
-                                          ? " ${(dataAll["stock${bse_names.indexOf(items[position])}"]["close"] - lastDataAll["stock${bse_names.indexOf(items[position])}"]["close"]).toStringAsFixed(2)} "
-                                          : '',
-                                      style: TextStyle(
-                                          backgroundColor: dataFetched[bse_names
+                                    Row(
+                                      children: <Widget>[
+                                        Text(
+                                          dataFetched[bse_names
                                                   .indexOf(items[position])]
                                               ? dataAll["stock${bse_names.indexOf(items[position])}"]
-                                                          ["close"] >=
-                                                      lastDataAll[
-                                                              "stock${bse_names.indexOf(items[position])}"]
-                                                          ["close"]
-                                                  ? Colors.green
-                                                  : Colors.red
-                                              : Colors.white,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: 12),
+                                                      ["close"]
+                                                  .toString()
+                                              : '',
+                                          style: TextStyle(
+                                              color: Colors.pink,
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 12),
+                                        ),
+                                        Text(' '),
+                                        Text(
+                                          dataFetched[bse_names
+                                                  .indexOf(items[position])]
+                                              ? " ${(dataAll["stock${bse_names.indexOf(items[position])}"]["close"] - lastDataAll["stock${bse_names.indexOf(items[position])}"]["close"]).toStringAsFixed(2)} "
+                                              : '',
+                                          style: TextStyle(
+                                              backgroundColor: dataFetched[
+                                                      bse_names.indexOf(
+                                                          items[position])]
+                                                  ? dataAll["stock${bse_names.indexOf(items[position])}"]
+                                                              ["close"] >=
+                                                          lastDataAll[
+                                                                  "stock${bse_names.indexOf(items[position])}"]
+                                                              ["close"]
+                                                      ? Colors.green
+                                                      : Colors.red
+                                                  : Colors.white,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 12),
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),
-                              ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.topRight,
+                        child: Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: IconButton(
+                            focusColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            splashColor: Colors.transparent,
+                            onPressed: () {
+                              print("Hello");
+                            },
+                            icon: Icon(
+                              Icons.favorite_border,
+                              color: Colors.black87,
                             ),
                           ),
-                        ],
+                        ),
                       ),
-                    ),
+                    ],
                   ),
                 );
               },
