@@ -1,6 +1,7 @@
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class StockSeries {
   final String date;
@@ -31,7 +32,7 @@ class StockChart extends StatelessWidget {
     ];
     return Container(
       color: Colors.white,
-      height: 400,
+      height: 650.h,
       child: Container(
         child: Padding(
           padding: const EdgeInsets.all(8.0),

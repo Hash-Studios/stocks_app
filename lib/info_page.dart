@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stocks_app/stock_graph.dart';
 import 'bsecodes.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 Map data = {};
 Map recentData = {};
@@ -67,6 +68,7 @@ class _InfoState extends State<Info> {
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context, width: 720, height: 1440, allowFontScaling: true);
     return Scaffold(
       backgroundColor: Colors.pink[100],
       appBar: AppBar(
@@ -146,8 +148,7 @@ class _InfoState extends State<Info> {
                         ),
                         Container(
                           color: Colors.white,
-                          width: 100,
-                          height: 45,
+                          height: 70.h,
                           padding: EdgeInsets.fromLTRB(20, 25, 50, 0),
                           child: ClipRRect(
                             borderRadius: BorderRadius.all(
@@ -163,7 +164,7 @@ class _InfoState extends State<Info> {
                         ),
                         Container(
                           color: Colors.white,
-                          height: 80,
+                          height: 130.h,
                           child: Row(
                             children: <Widget>[
                               Padding(
@@ -200,7 +201,7 @@ class _InfoState extends State<Info> {
                             elevation: 2,
                             color: Colors.pink[50],
                             child: SizedBox(
-                              width: 140,
+                              width: 220.w,
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Column(
@@ -244,7 +245,7 @@ class _InfoState extends State<Info> {
                             elevation: 2,
                             color: Colors.pink[50],
                             child: SizedBox(
-                              width: 140,
+                              width: 220.w,
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Column(
@@ -288,7 +289,7 @@ class _InfoState extends State<Info> {
                             elevation: 2,
                             color: Colors.pink[50],
                             child: SizedBox(
-                              width: 140,
+                              width: 220.w,
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Column(
@@ -332,7 +333,7 @@ class _InfoState extends State<Info> {
                             elevation: 2,
                             color: Colors.pink[50],
                             child: SizedBox(
-                              width: 140,
+                              width: 220.w,
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Column(
@@ -376,7 +377,7 @@ class _InfoState extends State<Info> {
                             elevation: 2,
                             color: Colors.pink[50],
                             child: SizedBox(
-                              width: 200,
+                              width: 380.w,
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Column(
@@ -465,7 +466,7 @@ class _InfoState extends State<Info> {
                           child: Container(
                             color: Colors.white,
                             child: SizedBox(
-                              height: 400,
+                              height: 650.h,
                               width: MediaQuery.of(context).size.width,
                               child: Padding(
                                 padding: const EdgeInsets.fromLTRB(
@@ -477,8 +478,7 @@ class _InfoState extends State<Info> {
                         ),
                         Container(
                           color: Colors.white,
-                          width: 100,
-                          height: 45,
+                          height: 70.h,
                           padding: EdgeInsets.fromLTRB(20, 25, 50, 0),
                           child: ClipRRect(
                             borderRadius: BorderRadius.all(
@@ -493,7 +493,7 @@ class _InfoState extends State<Info> {
                         ),
                         Container(
                           color: Colors.white,
-                          height: 80,
+                          height: 130.h,
                           child: Row(
                             children: <Widget>[
                               Padding(
@@ -530,7 +530,7 @@ class _InfoState extends State<Info> {
                             elevation: 2,
                             color: Colors.pink[50],
                             child: SizedBox(
-                              width: 140,
+                              width: 220.w,
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Column(
@@ -554,7 +554,7 @@ class _InfoState extends State<Info> {
                             elevation: 2,
                             color: Colors.pink[50],
                             child: SizedBox(
-                              width: 140,
+                              width: 220.w,
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Column(
@@ -578,7 +578,7 @@ class _InfoState extends State<Info> {
                             elevation: 2,
                             color: Colors.pink[50],
                             child: SizedBox(
-                              width: 140,
+                              width: 220.w,
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Column(
@@ -602,7 +602,7 @@ class _InfoState extends State<Info> {
                             elevation: 2,
                             color: Colors.pink[50],
                             child: SizedBox(
-                              width: 140,
+                              width: 220.w,
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Column(
@@ -626,7 +626,7 @@ class _InfoState extends State<Info> {
                             elevation: 2,
                             color: Colors.pink[50],
                             child: SizedBox(
-                              width: 200,
+                              width: 380.w,
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Column(

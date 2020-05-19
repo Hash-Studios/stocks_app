@@ -208,8 +208,8 @@ class _StocksState extends State<Stocks> {
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: SizedBox(
-                                  height: 195,
-                                  width: 195,
+                                  height: 310.h,
+                                  width: 335.w,
                                   child: Stack(
                                     alignment: Alignment.center,
                                     children: <Widget>[
@@ -230,8 +230,8 @@ class _StocksState extends State<Stocks> {
                                                       color1,
                                                       color2
                                                     ])),
-                                          child:
-                                              SizedBox(width: 195, height: 195),
+                                          child: SizedBox(
+                                              width: 335.w, height: 310.h),
                                         ),
                                       ),
                                       // InitialNameAvatar(

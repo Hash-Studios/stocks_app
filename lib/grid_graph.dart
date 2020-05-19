@@ -1,6 +1,7 @@
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class GridSeries {
   final String date;
@@ -29,7 +30,7 @@ class GridChart extends StatelessWidget {
       // double.parse(series.date.split("-")[2])
     ];
     return Container(
-      height: 190,
+      height: 290.h,
       child: Container(
         child: Padding(
           padding: const EdgeInsets.all(2.0),
