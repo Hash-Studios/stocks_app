@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'stocks_page.dart';
+import 'settings.dart';
 
 class CustomPopupMenu {
   CustomPopupMenu({this.title, this.icon});
@@ -44,10 +45,7 @@ class _HomeState extends State<Home> {
       color: Colors.pink[100],
       child: Text('Favourite Stocks'),
     ),
-    Container(
-      color: Colors.pink[100],
-      child: Text('Settings'),
-    ),
+    Settings()
   ];
 
   @override
