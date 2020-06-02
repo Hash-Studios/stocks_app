@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:stocks_app/stock_graph.dart';
 import 'package:stocks_app/stocksData.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:stocks_app/stockDataDayModel.dart';
+import 'package:stocks_app/stockDataModel.dart';
 
-Map data = {};
-Map recentData = {};
-Map lastData = {};
+StockDataModel data;
+StockDayDataModel recentData;
+StockDayDataModel lastData;
 bool dataFetched = false;
 List<StockSeries> dataList = [];
 
@@ -36,19 +38,20 @@ class _InfoState extends State<Info> {
 
   void getstock() async {
     try {
-      Map dataMap = await stock.getdata(widget.code);
+      StockDataModel dataMap = await stock.getdata(widget.code);
       setState(
         () {
           data = dataMap;
           for (var c = 0; c < 30; c++) {
             dataList.add(
               new StockSeries(
-                  date: data["data$c"]["date"], close: data["data$c"]["close"]),
+                  date: data.stockData["data$c"].date,
+                  close: data.stockData["data$c"].close),
             );
           }
-          recentData = data["data0"];
-          lastData = data["data1"];
-          print(recentData["dqtq"]);
+          recentData = data.stockData["data0"];
+          lastData = data.stockData["data1"];
+          // print(recentData.dqtq);
           dataFetched = true;
         },
       );
@@ -157,7 +160,7 @@ class _InfoState extends State<Info> {
                             child: Container(
                               child: LinearProgressIndicator(
                                 backgroundColor: Colors.grey[200],
-                                value: recentData["dqtq"] / 100,
+                                value: recentData.dqtq / 100,
                               ),
                             ),
                           ),
@@ -171,7 +174,7 @@ class _InfoState extends State<Info> {
                                 padding:
                                     const EdgeInsets.fromLTRB(22, 10, 6, 10),
                                 child: Text(
-                                  '${recentData["dqtq"].toString()}%',
+                                  '${recentData.dqtq.toString()}%',
                                   style: TextStyle(
                                       fontSize: 35,
                                       color: Colors.pink,
@@ -209,20 +212,20 @@ class _InfoState extends State<Info> {
                                       MainAxisAlignment.spaceEvenly,
                                   children: <Widget>[
                                     Text(
-                                      recentData["open"].toString(),
+                                      recentData.open.toString(),
                                       style: TextStyle(
                                           color: Colors.black87,
                                           fontSize: 32,
                                           fontWeight: FontWeight.bold),
                                     ),
                                     Text(
-                                      (recentData["open"] - lastData["open"])
+                                      (recentData.open - lastData.open)
                                           .toStringAsFixed(2),
                                       style: TextStyle(
-                                          color: recentData["open"] >=
-                                                  lastData["open"]
-                                              ? Colors.green
-                                              : Colors.red,
+                                          color:
+                                              recentData.open >= lastData.open
+                                                  ? Colors.green
+                                                  : Colors.red,
                                           fontSize: 15,
                                           fontWeight: FontWeight.bold),
                                     ),
@@ -253,20 +256,20 @@ class _InfoState extends State<Info> {
                                       MainAxisAlignment.spaceEvenly,
                                   children: <Widget>[
                                     Text(
-                                      recentData["high"].toString(),
+                                      recentData.high.toString(),
                                       style: TextStyle(
                                           color: Colors.black87,
                                           fontSize: 32,
                                           fontWeight: FontWeight.bold),
                                     ),
                                     Text(
-                                      (recentData["high"] - lastData["high"])
+                                      (recentData.high - lastData.high)
                                           .toStringAsFixed(2),
                                       style: TextStyle(
-                                          color: recentData["high"] >=
-                                                  lastData["high"]
-                                              ? Colors.green
-                                              : Colors.red,
+                                          color:
+                                              recentData.high >= lastData.high
+                                                  ? Colors.green
+                                                  : Colors.red,
                                           fontSize: 15,
                                           fontWeight: FontWeight.bold),
                                     ),
@@ -297,18 +300,17 @@ class _InfoState extends State<Info> {
                                       MainAxisAlignment.spaceEvenly,
                                   children: <Widget>[
                                     Text(
-                                      recentData["low"].toString(),
+                                      recentData.low.toString(),
                                       style: TextStyle(
                                           color: Colors.black87,
                                           fontSize: 32,
                                           fontWeight: FontWeight.bold),
                                     ),
                                     Text(
-                                      (recentData["low"] - lastData["low"])
+                                      (recentData.low - lastData.low)
                                           .toStringAsFixed(2),
                                       style: TextStyle(
-                                          color: recentData["low"] >=
-                                                  lastData["low"]
+                                          color: recentData.low >= lastData.low
                                               ? Colors.green
                                               : Colors.red,
                                           fontSize: 15,
@@ -341,20 +343,20 @@ class _InfoState extends State<Info> {
                                       MainAxisAlignment.spaceEvenly,
                                   children: <Widget>[
                                     Text(
-                                      recentData["close"].toString(),
+                                      recentData.close.toString(),
                                       style: TextStyle(
                                           color: Colors.black87,
                                           fontSize: 32,
                                           fontWeight: FontWeight.bold),
                                     ),
                                     Text(
-                                      (recentData["close"] - lastData["close"])
+                                      (recentData.close - lastData.close)
                                           .toStringAsFixed(2),
                                       style: TextStyle(
-                                          color: recentData["close"] >=
-                                                  lastData["close"]
-                                              ? Colors.green
-                                              : Colors.red,
+                                          color:
+                                              recentData.close >= lastData.close
+                                                  ? Colors.green
+                                                  : Colors.red,
                                           fontSize: 15,
                                           fontWeight: FontWeight.bold),
                                     ),
@@ -385,19 +387,19 @@ class _InfoState extends State<Info> {
                                       MainAxisAlignment.spaceEvenly,
                                   children: <Widget>[
                                     Text(
-                                      recentData["turn"].toString(),
+                                      recentData.turn.toString(),
                                       style: TextStyle(
                                           color: Colors.black87,
                                           fontSize: 32,
                                           fontWeight: FontWeight.bold),
                                     ),
                                     Text(
-                                      '${((recentData["turn"] - lastData["turn"]) / lastData["turn"]).toStringAsFixed(2)}%',
+                                      '${((recentData.turn - lastData.turn) / lastData.turn).toStringAsFixed(2)}%',
                                       style: TextStyle(
-                                          color: recentData["turn"] >=
-                                                  lastData["turn"]
-                                              ? Colors.green
-                                              : Colors.red,
+                                          color:
+                                              recentData.turn >= lastData.turn
+                                                  ? Colors.green
+                                                  : Colors.red,
                                           fontSize: 15,
                                           fontWeight: FontWeight.bold),
                                     ),

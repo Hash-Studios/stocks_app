@@ -155,9 +155,10 @@ class _StockTileState extends State<StockTile> {
                           Text(
                             widget.dataFetched[bse_names
                                     .indexOf(widget.items[widget.position])]
-                                ? widget.dataAll[
+                                ? widget
+                                    .dataAll[
                                         "stock${bse_names.indexOf(widget.items[widget.position])}"]
-                                        ["close"]
+                                    .close
                                     .toString()
                                 : '',
                             style: TextStyle(
@@ -169,17 +170,19 @@ class _StockTileState extends State<StockTile> {
                           Text(
                             widget.dataFetched[bse_names
                                     .indexOf(widget.items[widget.position])]
-                                ? " ${(widget.dataAll["stock${bse_names.indexOf(widget.items[widget.position])}"]["close"] - widget.lastDataAll["stock${bse_names.indexOf(widget.items[widget.position])}"]["close"]).toStringAsFixed(2)} "
+                                ? " ${(widget.dataAll["stock${bse_names.indexOf(widget.items[widget.position])}"].close - widget.lastDataAll["stock${bse_names.indexOf(widget.items[widget.position])}"].close).toStringAsFixed(2)} "
                                 : '',
                             style: TextStyle(
                                 backgroundColor: widget.dataFetched[bse_names
                                         .indexOf(widget.items[widget.position])]
-                                    ? widget.dataAll[
+                                    ? widget
+                                                .dataAll[
                                                     "stock${bse_names.indexOf(widget.items[widget.position])}"]
-                                                ["close"] >=
-                                            widget.lastDataAll[
+                                                .close >=
+                                            widget
+                                                .lastDataAll[
                                                     "stock${bse_names.indexOf(widget.items[widget.position])}"]
-                                                ["close"]
+                                                .close
                                         ? Colors.green
                                         : Colors.red
                                     : Colors.white,

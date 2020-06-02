@@ -2,6 +2,7 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:stocks_app/stockDataDayModel.dart';
 
 class StockSeries {
   final String date;
@@ -12,7 +13,7 @@ class StockSeries {
 
 class StockChart extends StatelessWidget {
   final List<StockSeries> dataChart;
-  final Map dataMapped;
+  final StockDayDataModel dataMapped;
 
   StockChart({@required this.dataChart, @required this.dataMapped});
 
@@ -39,7 +40,7 @@ class StockChart extends StatelessWidget {
           child: Column(
             children: <Widget>[
               Text(
-                this.dataMapped["close"].toString(),
+                this.dataMapped.close.toString(),
                 style: TextStyle(fontWeight: FontWeight.w800, fontSize: 50),
               ),
               Expanded(
