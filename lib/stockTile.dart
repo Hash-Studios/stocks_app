@@ -66,6 +66,135 @@ class _StockTileState extends State<StockTile> {
       padding: const EdgeInsets.fromLTRB(4, 4, 4, 4),
       child: Stack(
         children: <Widget>[
+          Card(
+            color: Colors.blue[50],
+            elevation: 0,
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SizedBox(
+                    height: 310.h,
+                    width: 335.w,
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: <Widget>[
+                        ClipRRect(
+                          borderRadius: BorderRadius.all(Radius.circular(5)),
+                          child: Container(
+                            decoration: widget.dataFetched[bse_names
+                                    .indexOf(widget.items[widget.position])]
+                                ? BoxDecoration(color: Colors.white)
+                                : BoxDecoration(
+                                    gradient: LinearGradient(
+                                        begin: Alignment.topLeft,
+                                        end: Alignment.bottomRight,
+                                        colors: [color1, color2])),
+                            child: SizedBox(width: 335.w, height: 310.h),
+                          ),
+                        ),
+                        widget.dataFetched[bse_names
+                                .indexOf(widget.items[widget.position])]
+                            ? Align(
+                                alignment: Alignment.topCenter,
+                                child: Text(
+                                  getInitials(widget.items[widget.position]),
+                                  style: TextStyle(
+                                      fontSize: 25, color: Colors.black87),
+                                ),
+                              )
+                            : Text(
+                                getInitials(widget.items[widget.position]),
+                                style: TextStyle(
+                                    fontSize: 25, color: Colors.black87),
+                              ),
+                        widget.dataFetched[bse_names
+                                .indexOf(widget.items[widget.position])]
+                            ? GridChart(
+                                dataChart: widget.graphs[
+                                    "stock${bse_names.indexOf(widget.items[widget.position])}"],
+                              )
+                            : CircularProgressIndicator(
+                                valueColor:
+                                    AlwaysStoppedAnimation(Colors.white12),
+                              ),
+                      ],
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(6),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      SizedBox(
+                        width: 270,
+                        child: Text(
+                          titleCase(widget.items[widget.position])
+                              .replaceAll(" Ltd.", "")
+                              .replaceAll(" Ltd", "")
+                              .replaceAll(".ltd.", ""),
+                          style: TextStyle(
+                              color: Colors.black87,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 18),
+                        ),
+                      ),
+                      Text(
+                        widget.items[widget.position],
+                        style: TextStyle(
+                            color: Colors.black87,
+                            fontWeight: FontWeight.w300,
+                            fontSize: 12),
+                      ),
+                      Row(
+                        children: <Widget>[
+                          Text(
+                            widget.dataFetched[bse_names
+                                    .indexOf(widget.items[widget.position])]
+                                ? widget.dataAll[
+                                        "stock${bse_names.indexOf(widget.items[widget.position])}"]
+                                        ["close"]
+                                    .toString()
+                                : '',
+                            style: TextStyle(
+                                color: Colors.blue,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 12),
+                          ),
+                          Text(' '),
+                          Text(
+                            widget.dataFetched[bse_names
+                                    .indexOf(widget.items[widget.position])]
+                                ? " ${(widget.dataAll["stock${bse_names.indexOf(widget.items[widget.position])}"]["close"] - widget.lastDataAll["stock${bse_names.indexOf(widget.items[widget.position])}"]["close"]).toStringAsFixed(2)} "
+                                : '',
+                            style: TextStyle(
+                                backgroundColor: widget.dataFetched[bse_names
+                                        .indexOf(widget.items[widget.position])]
+                                    ? widget.dataAll[
+                                                    "stock${bse_names.indexOf(widget.items[widget.position])}"]
+                                                ["close"] >=
+                                            widget.lastDataAll[
+                                                    "stock${bse_names.indexOf(widget.items[widget.position])}"]
+                                                ["close"]
+                                        ? Colors.green
+                                        : Colors.red
+                                    : Colors.white,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 12),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
           GestureDetector(
             onTap: () {
               Navigator.push(
@@ -92,142 +221,11 @@ class _StockTileState extends State<StockTile> {
                   },
                 ),
               );
-              print(bse_codes[bse_names.indexOf(widget.items[widget.position])]
-                  .toString()
-                  .replaceAll("{", "")
-                  .replaceAll("}", "")
-                  .split(': ')[1]
-                  .toString());
             },
-            child: Card(
-              color: Colors.blue[50],
-              elevation: 0,
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: SizedBox(
-                      height: 310.h,
-                      width: 335.w,
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: <Widget>[
-                          ClipRRect(
-                            borderRadius: BorderRadius.all(Radius.circular(5)),
-                            child: Container(
-                              decoration: widget.dataFetched[bse_names
-                                      .indexOf(widget.items[widget.position])]
-                                  ? BoxDecoration(color: Colors.white)
-                                  : BoxDecoration(
-                                      gradient: LinearGradient(
-                                          begin: Alignment.topLeft,
-                                          end: Alignment.bottomRight,
-                                          colors: [color1, color2])),
-                              child: SizedBox(width: 335.w, height: 310.h),
-                            ),
-                          ),
-                          widget.dataFetched[bse_names
-                                  .indexOf(widget.items[widget.position])]
-                              ? Align(
-                                  alignment: Alignment.topCenter,
-                                  child: Text(
-                                    getInitials(widget.items[widget.position]),
-                                    style: TextStyle(
-                                        fontSize: 25, color: Colors.black87),
-                                  ),
-                                )
-                              : Text(
-                                  getInitials(widget.items[widget.position]),
-                                  style: TextStyle(
-                                      fontSize: 25, color: Colors.black87),
-                                ),
-                          widget.dataFetched[bse_names
-                                  .indexOf(widget.items[widget.position])]
-                              ? GridChart(
-                                  dataChart: widget.graphs[
-                                      "stock${bse_names.indexOf(widget.items[widget.position])}"],
-                                )
-                              : CircularProgressIndicator(
-                                  valueColor:
-                                      AlwaysStoppedAnimation(Colors.white12),
-                                ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(6),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        SizedBox(
-                          width: 270,
-                          child: Text(
-                            titleCase(widget.items[widget.position])
-                                .replaceAll(" Ltd.", "")
-                                .replaceAll(" Ltd", "")
-                                .replaceAll(".ltd.", ""),
-                            style: TextStyle(
-                                color: Colors.black87,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 18),
-                          ),
-                        ),
-                        Text(
-                          widget.items[widget.position],
-                          style: TextStyle(
-                              color: Colors.black87,
-                              fontWeight: FontWeight.w300,
-                              fontSize: 12),
-                        ),
-                        Row(
-                          children: <Widget>[
-                            Text(
-                              widget.dataFetched[bse_names
-                                      .indexOf(widget.items[widget.position])]
-                                  ? widget.dataAll[
-                                          "stock${bse_names.indexOf(widget.items[widget.position])}"]
-                                          ["close"]
-                                      .toString()
-                                  : '',
-                              style: TextStyle(
-                                  color: Colors.blue,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 12),
-                            ),
-                            Text(' '),
-                            Text(
-                              widget.dataFetched[bse_names
-                                      .indexOf(widget.items[widget.position])]
-                                  ? " ${(widget.dataAll["stock${bse_names.indexOf(widget.items[widget.position])}"]["close"] - widget.lastDataAll["stock${bse_names.indexOf(widget.items[widget.position])}"]["close"]).toStringAsFixed(2)} "
-                                  : '',
-                              style: TextStyle(
-                                  backgroundColor: widget.dataFetched[
-                                          bse_names.indexOf(
-                                              widget.items[widget.position])]
-                                      ? widget.dataAll[
-                                                      "stock${bse_names.indexOf(widget.items[widget.position])}"]
-                                                  ["close"] >=
-                                              widget.lastDataAll[
-                                                      "stock${bse_names.indexOf(widget.items[widget.position])}"]
-                                                  ["close"]
-                                          ? Colors.green
-                                          : Colors.red
-                                      : Colors.white,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 12),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+            child: SizedBox(
+              width: double.maxFinite,
+              height: double.maxFinite,
+              child: Text(' '),
             ),
           ),
           Align(

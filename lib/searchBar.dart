@@ -47,8 +47,6 @@ class _SearchBarState extends State<SearchBar> {
       decoration: InputDecoration(
         hintText: "Search",
         prefixIcon: Icon(Icons.search),
-        // border: OutlineInputBorder(
-        //     borderRadius: BorderRadius.all(Radius.circular(5.0)))
       ),
     );
   }
