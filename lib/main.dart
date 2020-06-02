@@ -1,5 +1,4 @@
 import 'package:flutter/services.dart';
-// import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:flutter/material.dart';
 import 'home.dart';
 
@@ -16,7 +15,8 @@ class MyBehavior extends ScrollBehavior {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
+    SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(statusBarColor: Colors.white));
     return MaterialApp(
       builder: (context, child) {
         return ScrollConfiguration(
@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Stock Market',
       theme: ThemeData(
-        appBarTheme: AppBarTheme(brightness: Brightness.dark),
+        appBarTheme: AppBarTheme(brightness: Brightness.light),
         primarySwatch: Colors.pink,
       ),
       home: Home(title: 'Stock Market'),
