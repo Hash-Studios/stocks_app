@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stocks_app/stock_graph.dart';
-import 'bsecodes.dart';
+import 'package:stocks_app/stocksData.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 Map data = {};
