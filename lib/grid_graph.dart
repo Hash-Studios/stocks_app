@@ -20,7 +20,7 @@ class GridChart extends StatelessWidget {
     List<charts.Series<GridSeries, DateTime>> series = [
       charts.Series(
           id: "Stocks",
-          colorFn: (_, __) => charts.MaterialPalette.pink.shadeDefault,
+          colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
           data: dataChart,
           domainFn: (GridSeries series, _) => DateTime(
               int.parse(series.date.split("-")[0]),

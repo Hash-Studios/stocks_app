@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
       title: 'Stock Market',
       theme: ThemeData(
         appBarTheme: AppBarTheme(brightness: Brightness.light),
-        primarySwatch: Colors.pink,
+        primarySwatch: Colors.blue,
       ),
       home: Home(title: 'Stock Market'),
     );
