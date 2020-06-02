@@ -1,10 +1,11 @@
-// import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:hive/hive.dart';
 import 'package:stocks_app/grid_graph.dart';
 import 'package:stocks_app/searchBar.dart';
+import 'package:stocks_app/stock.dart';
 import 'package:stocks_app/stockTile.dart';
+import 'package:stocks_app/stock_day.dart';
 import 'package:stocks_app/stocksData.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_app/bseCodesData.dart';
@@ -21,6 +22,9 @@ Map<String, List<GridSeries>> graphs = {};
 Map dataAll = {};
 Map lastDataAll = {};
 List<bool> dataFetched = [];
+
+// Hive Box
+var _box;
 
 // ->Stocks Widget
 class Stocks extends StatefulWidget {
@@ -46,6 +50,22 @@ class _StocksState extends State<Stocks> {
               .split(': ')[1]
               .toString(),
         );
+
+        Map<String, StockDayModel> newData = {};
+        for (var p = 0; p < 30; p++) {
+          newData["data$p"] = StockDayModel(
+            dataMap.stockData["data$p"].date,
+            dataMap.stockData["data$p"].open,
+            dataMap.stockData["data$p"].high,
+            dataMap.stockData["data$p"].low,
+            dataMap.stockData["data$p"].close,
+            dataMap.stockData["data$p"].turn,
+            dataMap.stockData["data$p"].dqtq,
+          );
+        }
+        _box.put(dataMap.code, StockModel(dataMap.code, newData));
+        print("Written");
+        print(_box.get(dataMap.code));
 
         setState(
           () {
@@ -81,17 +101,19 @@ class _StocksState extends State<Stocks> {
   final duplicateItems = bse_names;
   var items = List<String>();
 
-  // Future<Void> initHive() async {
-  //   final dir = await getApplicationDocumentsDirectory();
-  //   Hive.init(dir.path);
-  //   var _box = await Hive.openBox('stocks_data');
-  //   _box.put('name', 'Greg');
-  //   print(_box.get('name'));
-  // }
+  Future<void> initHive() async {
+    final dir = await getApplicationDocumentsDirectory();
+    Hive.init(dir.path);
+    Hive.registerAdapter(StockModelAdapter());
+    Hive.registerAdapter(StockDayModelAdapter());
+    _box = await Hive.openBox<StockModel>('stocks');
+    // _box.put('name', 'Greg');
+    // print(_box.get('name'));
+  }
 
   @override
   void initState() {
-    // initHive();
+    initHive();
     items.addAll(duplicateItems); // Initialising Search Filter
     super.initState();
     for (int a = 0; a < 5000; a++) {
