@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:stocks_app/stockDataModel.dart';
-import 'package:stocks_app/stockDataDayModel.dart';
+import 'package:stocks_app/stockDayDataModel.dart';
 
 class StockData {
   List bseNames;

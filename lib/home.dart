@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'stocks_page.dart';
 import 'settings.dart';
 import 'package:stocks_app/custompopupmenu.dart';
@@ -41,7 +42,7 @@ class _HomeState extends State<Home> {
   final List<Widget> _children = [
     Stocks(),
     Container(
-      color: Colors.pink[100],
+      color: Colors.blue[100],
       child: Text('Favourite Stocks'),
     ),
     Settings()
@@ -78,7 +79,7 @@ class _HomeState extends State<Home> {
         backgroundColor: Colors.white,
         title: Text(
           widget.title,
-          style: TextStyle(
+          style: GoogleFonts.roboto(
               color: Colors.black87, fontSize: 35, fontWeight: FontWeight.bold),
         ),
       ),

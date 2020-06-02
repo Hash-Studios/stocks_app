@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:stocks_app/stock_graph.dart';
 import 'package:stocks_app/stocksData.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:stocks_app/stockDataDayModel.dart';
+import 'package:stocks_app/stockDayDataModel.dart';
 import 'package:stocks_app/stockDataModel.dart';
 
 StockDataModel data;
