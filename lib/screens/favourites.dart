@@ -27,122 +27,42 @@ List<bool> dataFetched = [];
 var refreshKey = GlobalKey<RefreshIndicatorState>();
 
 // Hive Box
-var _box;
-var _fav;
-bool favLoaded = false;
+var _box = Hive.box<StockModel>('stocks');
+var _fav = Hive.box('fav_stocks');
+bool favLoaded = true;
 
 // ->Stocks Widget
-class Stocks extends StatefulWidget {
+class Favourites extends StatefulWidget {
   @override
-  _StocksState createState() => _StocksState();
+  _FavouritesState createState() => _FavouritesState();
 }
 
-class _StocksState extends State<Stocks> {
+class _FavouritesState extends State<Favourites> {
   // StockData Object which is used to fetch stocks data
   StockData stock = StockData();
 
   void getstock() async {
-    // For only 20 stocks
-    for (int b = 0; b < 20; b++) {
-      try {
-        if (_box.get(
-              bse_codes[b]
-                  .toString()
-                  .replaceAll("{", "")
-                  .replaceAll("}", "")
-                  .split(': ')[1]
-                  .toString(),
-            ) ==
-            null) {
-          // Fetching data for each code
-          StockModel dataMap = await stock.getdata(
-            // Extracting Stock Code
+    items = [];
+    for (int b = 0; b < bse_codes.length; b++) {
+      if (_fav.get(
             bse_codes[b]
                 .toString()
                 .replaceAll("{", "")
                 .replaceAll("}", "")
                 .split(': ')[1]
                 .toString(),
-          );
-
-          // Map<String, StockDayModel> newData = {};
-          // for (var p = 0; p < 30; p++) {
-          //   newData["data$p"] = StockDayModel(
-          //     dataMap.stockData["data$p"].date,
-          //     dataMap.stockData["data$p"].open,
-          //     dataMap.stockData["data$p"].high,
-          //     dataMap.stockData["data$p"].low,
-          //     dataMap.stockData["data$p"].close,
-          //     dataMap.stockData["data$p"].turn,
-          //     dataMap.stockData["data$p"].dqtq,
-          //   );
-          // }
-          // _box.put(dataMap.code, StockModel(dataMap.code, dataMap.stockData));
-          _box.put(dataMap.code, dataMap);
-          print("Written");
-          print(_box.get(dataMap.code));
-
-          setState(
-            () {
-              dataAll["stock$b"] = dataMap.stockData["data0"]; // Latest Data
-              lastDataAll["stock$b"] =
-                  dataMap.stockData["data1"]; // Last Day's Data
-              graphs["stock$b"] =
-                  new List(); // Initialising List to Store Graphs
-            },
-          );
-
-          // Adding Graph for Last 30 Days
-          for (var c = 0; c < 30; c++) {
-            graphs["stock$b"].add(
-              new GridSeries(
-                  date: dataMap.stockData["data$c"].date,
-                  close: dataMap.stockData["data$c"].close),
-            );
-          }
-
-          // Data is Fetched
-          setState(() {
-            dataFetched[b] = true;
-          });
-        } else {
-          StockModel dataMap = _box.get(
-            bse_codes[b]
-                .toString()
-                .replaceAll("{", "")
-                .replaceAll("}", "")
-                .split(': ')[1]
-                .toString(),
-          );
-          dataAll["stock$b"] = dataMap.stockData["data0"]; // Latest Data
-          lastDataAll["stock$b"] =
-              dataMap.stockData["data1"]; // Last Day's Data
-          graphs["stock$b"] = new List(); // Initialising List to Store Graphs
-
-          // Adding Graph for Last 30 Days
-          for (var c = 0; c < 30; c++) {
-            graphs["stock$b"].add(
-              new GridSeries(
-                  date: dataMap.stockData["data$c"].date,
-                  close: dataMap.stockData["data$c"].close),
-            );
-          }
-
-          // Data is Fetched
-          setState(() {
-            dataFetched[b] = true;
-          });
-          if (_box
-                  .get(
-                    bse_codes[b]
-                        .toString()
-                        .replaceAll("{", "")
-                        .replaceAll("}", "")
-                        .split(': ')[1]
-                        .toString(),
-                  )
-                  .date !=
-              DateFormat("yy-MM-dd").format(DateTime.now())) {
+          ) ==
+          true) {
+        try {
+          if (_box.get(
+                bse_codes[b]
+                    .toString()
+                    .replaceAll("{", "")
+                    .replaceAll("}", "")
+                    .split(': ')[1]
+                    .toString(),
+              ) ==
+              null) {
             // Fetching data for each code
             StockModel dataMap = await stock.getdata(
               // Extracting Stock Code
@@ -194,51 +114,126 @@ class _StocksState extends State<Stocks> {
             setState(() {
               dataFetched[b] = true;
             });
+          } else {
+            StockModel dataMap = _box.get(
+              bse_codes[b]
+                  .toString()
+                  .replaceAll("{", "")
+                  .replaceAll("}", "")
+                  .split(': ')[1]
+                  .toString(),
+            );
+            dataAll["stock$b"] = dataMap.stockData["data0"]; // Latest Data
+            lastDataAll["stock$b"] =
+                dataMap.stockData["data1"]; // Last Day's Data
+            graphs["stock$b"] = new List(); // Initialising List to Store Graphs
+
+            // Adding Graph for Last 30 Days
+            for (var c = 0; c < 30; c++) {
+              graphs["stock$b"].add(
+                new GridSeries(
+                    date: dataMap.stockData["data$c"].date,
+                    close: dataMap.stockData["data$c"].close),
+              );
+            }
+
+            // Data is Fetched
+            setState(() {
+              dataFetched[b] = true;
+            });
+            if (_box
+                    .get(
+                      bse_codes[b]
+                          .toString()
+                          .replaceAll("{", "")
+                          .replaceAll("}", "")
+                          .split(': ')[1]
+                          .toString(),
+                    )
+                    .date !=
+                DateFormat("yy-MM-dd").format(DateTime.now())) {
+              // Fetching data for each code
+              StockModel dataMap = await stock.getdata(
+                // Extracting Stock Code
+                bse_codes[b]
+                    .toString()
+                    .replaceAll("{", "")
+                    .replaceAll("}", "")
+                    .split(': ')[1]
+                    .toString(),
+              );
+
+              // Map<String, StockDayModel> newData = {};
+              // for (var p = 0; p < 30; p++) {
+              //   newData["data$p"] = StockDayModel(
+              //     dataMap.stockData["data$p"].date,
+              //     dataMap.stockData["data$p"].open,
+              //     dataMap.stockData["data$p"].high,
+              //     dataMap.stockData["data$p"].low,
+              //     dataMap.stockData["data$p"].close,
+              //     dataMap.stockData["data$p"].turn,
+              //     dataMap.stockData["data$p"].dqtq,
+              //   );
+              // }
+              // _box.put(dataMap.code, StockModel(dataMap.code, dataMap.stockData));
+              _box.put(dataMap.code, dataMap);
+              print("Written");
+              print(_box.get(dataMap.code));
+
+              setState(
+                () {
+                  dataAll["stock$b"] =
+                      dataMap.stockData["data0"]; // Latest Data
+                  lastDataAll["stock$b"] =
+                      dataMap.stockData["data1"]; // Last Day's Data
+                  graphs["stock$b"] =
+                      new List(); // Initialising List to Store Graphs
+                },
+              );
+
+              // Adding Graph for Last 30 Days
+              for (var c = 0; c < 30; c++) {
+                graphs["stock$b"].add(
+                  new GridSeries(
+                      date: dataMap.stockData["data$c"].date,
+                      close: dataMap.stockData["data$c"].close),
+                );
+              }
+            }
           }
+        } catch (e) {
+          print(e);
         }
-      } catch (e) {
-        print(e);
+        items.add(bse_names[b]);
+        // Data is Fetched
+        setState(() {
+          dataFetched[b] = true;
+        });
       }
     }
-
     // print(dataAll.toString());
   }
 
   // Search Input Text Controllers
-  TextEditingController editingController = TextEditingController();
-  final duplicateItems = bse_names;
+  // TextEditingController editingController = TextEditingController();
+  // final duplicateItems = bse_names;
   var items = List<String>();
-
-  Future<void> initHive() async {
-    final dir = await getApplicationDocumentsDirectory();
-    Hive.init(dir.path);
-    Hive.registerAdapter(StockModelAdapter());
-    Hive.registerAdapter(StockDayModelAdapter());
-    _fav = await Hive.openBox('fav_stocks');
-    setState(() {
-      favLoaded = true;
-    });
-    _box = await Hive.openBox<StockModel>('stocks');
-    // _box.put('name', 'Greg');
-    // print(_box.get('name'));
-    getstock(); // Get data as soon as initialised
-  }
 
   @override
   void initState() {
-    initHive();
-    items.addAll(duplicateItems); // Initialising Search Filter
+    getstock(); // Get data as soon as initialised
+    // items.addAll(duplicateItems); // Initialising Search Filter
     super.initState();
     for (int a = 0; a < 5000; a++) {
       dataFetched.add(false); // Setting Data is not Fetched for every Stock
     }
   }
 
-  @override
-  void dispose() {
-    editingController.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   editingController.dispose();
+  //   super.dispose();
+  // }
 
   Future<Null> refreshList() async {
     refreshKey.currentState?.show(atTop: true);
@@ -253,9 +248,9 @@ class _StocksState extends State<Stocks> {
     return RefreshIndicator(
       child: Column(
         children: <Widget>[
-          Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: SearchBar(editingController, duplicateItems, items)),
+          // Padding(
+          //     padding: const EdgeInsets.all(8.0),
+          //     child: SearchBar(editingController, duplicateItems, items)),
           Expanded(
             child: Scrollbar(
               child: GridView.builder(

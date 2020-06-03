@@ -25,6 +25,7 @@ Color color2 = _randomColor.randomColor(
     colorBrightness: ColorBrightness.light);
 
 class StockTile extends StatefulWidget {
+  final Key key;
   List<String> items;
   int position;
   List<bool> dataFetched;
@@ -33,7 +34,7 @@ class StockTile extends StatefulWidget {
   Map<String, List<GridSeries>> graphs;
   bool favLoaded;
 
-  StockTile(this.items, this.position, this.dataFetched, this.dataAll,
+  StockTile(this.key, this.items, this.position, this.dataFetched, this.dataAll,
       this.lastDataAll, this.graphs, this.favLoaded);
   @override
   _StockTileState createState() => _StockTileState();
@@ -247,21 +248,24 @@ class _StockTileState extends State<StockTile> {
                 onPressed: () {
                   // print("Hello");
                   favLoaded
-                      ? _fav.get(bse_codes[widget.position]
+                      ? _fav.get(bse_codes[bse_names
+                                      .indexOf(widget.items[widget.position])]
                                   .toString()
                                   .replaceAll("{", "")
                                   .replaceAll("}", "")
                                   .split(': ')[1]
                                   .toString()) ==
                               true
-                          ? _fav.delete(bse_codes[widget.position]
+                          ? _fav.delete(bse_codes[bse_names
+                                  .indexOf(widget.items[widget.position])]
                               .toString()
                               .replaceAll("{", "")
                               .replaceAll("}", "")
                               .split(': ')[1]
                               .toString())
                           : _fav.put(
-                              bse_codes[widget.position]
+                              bse_codes[bse_names
+                                      .indexOf(widget.items[widget.position])]
                                   .toString()
                                   .replaceAll("{", "")
                                   .replaceAll("}", "")
@@ -273,7 +277,8 @@ class _StockTileState extends State<StockTile> {
                 },
                 icon: Icon(
                   favLoaded
-                      ? _fav.get(bse_codes[widget.position]
+                      ? _fav.get(bse_codes[bse_names
+                                      .indexOf(widget.items[widget.position])]
                                   .toString()
                                   .replaceAll("{", "")
                                   .replaceAll("}", "")

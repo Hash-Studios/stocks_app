@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:stocks_app/screens/favourites.dart';
 import 'stocks_page.dart';
 import 'settings.dart';
 import 'package:stocks_app/ui/custompopupmenu.dart';
@@ -41,11 +42,8 @@ class _HomeState extends State<Home> {
 
   final List<Widget> _children = [
     Stocks(),
-    Container(
-      color: Colors.blue[100],
-      child: Text('Favourite Stocks'),
-    ),
-    Settings()
+    Favourites(),
+    Settings(),
   ];
 
   @override
