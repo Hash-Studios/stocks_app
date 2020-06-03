@@ -40,6 +40,9 @@ dependencies:
 #   quiver: 2.1.0
 
 dev_dependencies:
+  flutter_driver:
+    sdk: flutter
+  test: any
   flutter_test:
     sdk: flutter
   hive_generator: 0.5.1
