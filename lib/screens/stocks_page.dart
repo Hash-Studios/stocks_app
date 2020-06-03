@@ -25,6 +25,8 @@ List<bool> dataFetched = [];
 
 // Hive Box
 var _box;
+var _fav;
+bool favLoaded = false;
 
 // ->Stocks Widget
 class Stocks extends StatefulWidget {
@@ -209,6 +211,10 @@ class _StocksState extends State<Stocks> {
     Hive.init(dir.path);
     Hive.registerAdapter(StockModelAdapter());
     Hive.registerAdapter(StockDayModelAdapter());
+    _fav = await Hive.openBox('fav_stocks');
+    setState(() {
+      favLoaded = true;
+    });
     _box = await Hive.openBox<StockModel>('stocks');
     // _box.put('name', 'Greg');
     // print(_box.get('name'));
@@ -249,8 +255,8 @@ class _StocksState extends State<Stocks> {
               shrinkWrap: true,
               itemCount: items.length,
               itemBuilder: (context, position) {
-                return StockTile(
-                    items, position, dataFetched, dataAll, lastDataAll, graphs);
+                return StockTile(items, position, dataFetched, dataAll,
+                    lastDataAll, graphs, favLoaded);
               },
             ),
           ),

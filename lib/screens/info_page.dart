@@ -16,6 +16,7 @@ bool dataFetched = false;
 List<StockSeries> dataList = [];
 // Hive Box
 var _box = Hive.box<StockModel>('stocks');
+var _fav = Hive.box('fav_stocks');
 
 class Info extends StatefulWidget {
   String name;
@@ -136,10 +137,17 @@ class _InfoState extends State<Info> {
         actions: <Widget>[
           IconButton(
               icon: Icon(
-                Icons.favorite_border,
+                _fav.get(widget.code) == true
+                    ? Icons.favorite
+                    : Icons.favorite_border,
                 color: Colors.grey,
               ),
-              onPressed: null),
+              onPressed: () {
+                _fav.get(widget.code) == true
+                    ? _fav.delete(widget.code)
+                    : _fav.put(widget.code, true);
+                setState(() {});
+              }),
           IconButton(
               icon: Icon(
                 Icons.more_vert,

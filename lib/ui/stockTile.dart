@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:random_color/random_color.dart';
+import 'package:stocks_app/screens/stocks_page.dart';
 import 'package:stocks_app/ui/grid_graph.dart';
 import 'package:stocks_app/screens/info_page.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_app/data/bseCodesData.dart';
+import 'package:hive/hive.dart';
 
 // ->Globals
+
+// Hive Vars
+var _fav = Hive.box('fav_stocks');
 
 /// Thumbnail colors
 RandomColor _randomColor = RandomColor();
@@ -26,9 +31,10 @@ class StockTile extends StatefulWidget {
   Map dataAll;
   Map lastDataAll;
   Map<String, List<GridSeries>> graphs;
+  bool favLoaded;
 
   StockTile(this.items, this.position, this.dataFetched, this.dataAll,
-      this.lastDataAll, this.graphs);
+      this.lastDataAll, this.graphs, this.favLoaded);
   @override
   _StockTileState createState() => _StockTileState();
 }
@@ -239,10 +245,44 @@ class _StockTileState extends State<StockTile> {
                 highlightColor: Colors.transparent,
                 splashColor: Colors.transparent,
                 onPressed: () {
-                  print("Hello");
+                  // print("Hello");
+                  favLoaded
+                      ? _fav.get(bse_codes[widget.position]
+                                  .toString()
+                                  .replaceAll("{", "")
+                                  .replaceAll("}", "")
+                                  .split(': ')[1]
+                                  .toString()) ==
+                              true
+                          ? _fav.delete(bse_codes[widget.position]
+                              .toString()
+                              .replaceAll("{", "")
+                              .replaceAll("}", "")
+                              .split(': ')[1]
+                              .toString())
+                          : _fav.put(
+                              bse_codes[widget.position]
+                                  .toString()
+                                  .replaceAll("{", "")
+                                  .replaceAll("}", "")
+                                  .split(': ')[1]
+                                  .toString(),
+                              true)
+                      : print('favLoaded is False');
+                  setState(() {});
                 },
                 icon: Icon(
-                  Icons.favorite_border,
+                  favLoaded
+                      ? _fav.get(bse_codes[widget.position]
+                                  .toString()
+                                  .replaceAll("{", "")
+                                  .replaceAll("}", "")
+                                  .split(': ')[1]
+                                  .toString()) ==
+                              true
+                          ? Icons.favorite
+                          : Icons.favorite_border
+                      : Icons.favorite_border,
                   color: Colors.black87,
                 ),
               ),

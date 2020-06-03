@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 // import 'package:dynamic_theme/dynamic_theme.dart';
 // import 'package:google_fonts/google_fonts.dart';
 import 'package:sticky_headers/sticky_headers.dart';
@@ -14,6 +15,9 @@ import 'package:url_launcher/url_launcher.dart';
 // import 'package:google_sign_in/google_sign_in.dart';
 // import 'package:Prism/main.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:path_provider/path_provider.dart';
+
+var _fav = Hive.box('fav_stocks');
 
 class Settings extends StatefulWidget {
   @override
@@ -93,6 +97,7 @@ class _SettingsState extends State<Settings> {
 
   void deleteData() {
     try {
+      _fav.clear();
       // databaseReference2
       //     .collection("users")
       //     .document(userId)
@@ -246,13 +251,13 @@ class _SettingsState extends State<Settings> {
                     ),
                     subtitle: Text("Remove all favorites"),
                     onTap: () {
+                      deleteData();
                       Fluttertoast.showToast(
                           msg: "Cleared all favorites!",
                           toastLength: Toast.LENGTH_LONG,
                           timeInSecForIosWeb: 1,
                           textColor: Colors.white,
                           fontSize: 16.0);
-                      deleteData();
                     }),
                 // ListTile(
                 //     leading: Icon(
