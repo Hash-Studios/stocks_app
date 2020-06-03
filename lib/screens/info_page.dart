@@ -4,6 +4,7 @@ import 'package:stocks_app/data/stock_day.dart';
 import 'package:stocks_app/ui/stock_graph.dart';
 import 'package:stocks_app/data/stocksData.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hive/hive.dart';
 // import 'package:stocks_app/data/stockDayDataModel.dart';
 // import 'package:stocks_app/data/stockDataModel.dart';
 
@@ -12,6 +13,8 @@ StockDayModel recentData;
 StockDayModel lastData;
 bool dataFetched = false;
 List<StockSeries> dataList = [];
+// Hive Box
+var _box = Hive.box<StockModel>('stocks');
 
 class Info extends StatefulWidget {
   String name;
@@ -40,23 +43,44 @@ class _InfoState extends State<Info> {
 
   void getstock() async {
     try {
-      StockModel dataMap = await stock.getdata(widget.code);
-      setState(
-        () {
-          data = dataMap;
-          for (var c = 0; c < 30; c++) {
-            dataList.add(
-              new StockSeries(
-                  date: data.stockData["data$c"].date,
-                  close: data.stockData["data$c"].close),
-            );
-          }
-          recentData = data.stockData["data0"];
-          lastData = data.stockData["data1"];
-          // print(recentData.dqtq);
-          dataFetched = true;
-        },
-      );
+      if (_box.get(widget.code) == null) {
+        StockModel dataMap = await stock.getdata(widget.code);
+        setState(
+          () {
+            data = dataMap;
+            for (var c = 0; c < 30; c++) {
+              dataList.add(
+                new StockSeries(
+                    date: data.stockData["data$c"].date,
+                    close: data.stockData["data$c"].close),
+              );
+            }
+            recentData = data.stockData["data0"];
+            lastData = data.stockData["data1"];
+            // print(recentData.dqtq);
+            dataFetched = true;
+            _box.put(dataMap.code, dataMap);
+          },
+        );
+      } else {
+        StockModel dataMap = _box.get(widget.code);
+        setState(
+          () {
+            data = dataMap;
+            for (var c = 0; c < 30; c++) {
+              dataList.add(
+                new StockSeries(
+                    date: data.stockData["data$c"].date,
+                    close: data.stockData["data$c"].close),
+              );
+            }
+            recentData = data.stockData["data0"];
+            lastData = data.stockData["data1"];
+            // print(recentData.dqtq);
+            dataFetched = true;
+          },
+        );
+      }
       // print(data["data0"].toString());
     } catch (e) {
       print(e);

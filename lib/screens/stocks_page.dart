@@ -39,59 +39,99 @@ class _StocksState extends State<Stocks> {
     // For only 20 stocks
     for (int b = 0; b < 20; b++) {
       try {
-        // Fetching data for each code
-        StockModel dataMap = await stock.getdata(
-          // Extracting Stock Code
-          bse_codes[b]
-              .toString()
-              .replaceAll("{", "")
-              .replaceAll("}", "")
-              .split(': ')[1]
-              .toString(),
-        );
-
-        Map<String, StockDayModel> newData = {};
-        for (var p = 0; p < 30; p++) {
-          newData["data$p"] = StockDayModel(
-            dataMap.stockData["data$p"].date,
-            dataMap.stockData["data$p"].open,
-            dataMap.stockData["data$p"].high,
-            dataMap.stockData["data$p"].low,
-            dataMap.stockData["data$p"].close,
-            dataMap.stockData["data$p"].turn,
-            dataMap.stockData["data$p"].dqtq,
+        if (_box.get(
+              bse_codes[b]
+                  .toString()
+                  .replaceAll("{", "")
+                  .replaceAll("}", "")
+                  .split(': ')[1]
+                  .toString(),
+            ) ==
+            null) {
+          // Fetching data for each code
+          StockModel dataMap = await stock.getdata(
+            // Extracting Stock Code
+            bse_codes[b]
+                .toString()
+                .replaceAll("{", "")
+                .replaceAll("}", "")
+                .split(': ')[1]
+                .toString(),
           );
-        }
-        _box.put(dataMap.code, StockModel(dataMap.code, newData));
-        print("Written");
-        print(_box.get(dataMap.code));
 
-        setState(
-          () {
-            dataAll["stock$b"] = dataMap.stockData["data0"]; // Latest Data
-            lastDataAll["stock$b"] =
-                dataMap.stockData["data1"]; // Last Day's Data
-            graphs["stock$b"] = new List(); // Initialising List to Store Graphs
-          },
-        );
+          // Map<String, StockDayModel> newData = {};
+          // for (var p = 0; p < 30; p++) {
+          //   newData["data$p"] = StockDayModel(
+          //     dataMap.stockData["data$p"].date,
+          //     dataMap.stockData["data$p"].open,
+          //     dataMap.stockData["data$p"].high,
+          //     dataMap.stockData["data$p"].low,
+          //     dataMap.stockData["data$p"].close,
+          //     dataMap.stockData["data$p"].turn,
+          //     dataMap.stockData["data$p"].dqtq,
+          //   );
+          // }
+          // _box.put(dataMap.code, StockModel(dataMap.code, dataMap.stockData));
+          _box.put(dataMap.code, dataMap);
+          print("Written");
+          print(_box.get(dataMap.code));
 
-        // Adding Graph for Last 30 Days
-        for (var c = 0; c < 30; c++) {
-          graphs["stock$b"].add(
-            new GridSeries(
-                date: dataMap.stockData["data$c"].date,
-                close: dataMap.stockData["data$c"].close),
+          setState(
+            () {
+              dataAll["stock$b"] = dataMap.stockData["data0"]; // Latest Data
+              lastDataAll["stock$b"] =
+                  dataMap.stockData["data1"]; // Last Day's Data
+              graphs["stock$b"] =
+                  new List(); // Initialising List to Store Graphs
+            },
           );
-        }
 
-        // Data is Fetched
-        setState(() {
-          dataFetched[b] = true;
-        });
+          // Adding Graph for Last 30 Days
+          for (var c = 0; c < 30; c++) {
+            graphs["stock$b"].add(
+              new GridSeries(
+                  date: dataMap.stockData["data$c"].date,
+                  close: dataMap.stockData["data$c"].close),
+            );
+          }
+
+          // Data is Fetched
+          setState(() {
+            dataFetched[b] = true;
+          });
+        } else {
+          StockModel dataMap = _box.get(
+            bse_codes[b]
+                .toString()
+                .replaceAll("{", "")
+                .replaceAll("}", "")
+                .split(': ')[1]
+                .toString(),
+          );
+          dataAll["stock$b"] = dataMap.stockData["data0"]; // Latest Data
+          lastDataAll["stock$b"] =
+              dataMap.stockData["data1"]; // Last Day's Data
+          graphs["stock$b"] = new List(); // Initialising List to Store Graphs
+
+          // Adding Graph for Last 30 Days
+          for (var c = 0; c < 30; c++) {
+            graphs["stock$b"].add(
+              new GridSeries(
+                  date: dataMap.stockData["data$c"].date,
+                  close: dataMap.stockData["data$c"].close),
+            );
+          }
+
+          // Data is Fetched
+          setState(() {
+            dataFetched[b] = true;
+          });
+        }
       } catch (e) {
         print(e);
       }
     }
+
     // print(dataAll.toString());
   }
 
@@ -108,6 +148,7 @@ class _StocksState extends State<Stocks> {
     _box = await Hive.openBox<StockModel>('stocks');
     // _box.put('name', 'Greg');
     // print(_box.get('name'));
+    getstock(); // Get data as soon as initialised
   }
 
   @override
@@ -118,7 +159,6 @@ class _StocksState extends State<Stocks> {
     for (int a = 0; a < 5000; a++) {
       dataFetched.add(false); // Setting Data is not Fetched for every Stock
     }
-    getstock(); // Get data as soon as initialised
   }
 
   @override
