@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:stocks_app/data/stock.dart';
+import 'package:stocks_app/data/stock_day.dart';
 import 'package:stocks_app/ui/stock_graph.dart';
 import 'package:stocks_app/data/stocksData.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:stocks_app/data/stockDayDataModel.dart';
-import 'package:stocks_app/data/stockDataModel.dart';
+// import 'package:stocks_app/data/stockDayDataModel.dart';
+// import 'package:stocks_app/data/stockDataModel.dart';
 
-StockDataModel data;
-StockDayDataModel recentData;
-StockDayDataModel lastData;
+StockModel data;
+StockDayModel recentData;
+StockDayModel lastData;
 bool dataFetched = false;
 List<StockSeries> dataList = [];
 
@@ -38,7 +40,7 @@ class _InfoState extends State<Info> {
 
   void getstock() async {
     try {
-      StockDataModel dataMap = await stock.getdata(widget.code);
+      StockModel dataMap = await stock.getdata(widget.code);
       setState(
         () {
           data = dataMap;
@@ -73,7 +75,7 @@ class _InfoState extends State<Info> {
   Widget build(BuildContext context) {
     ScreenUtil.init(context, width: 720, height: 1440, allowFontScaling: true);
     return Scaffold(
-      backgroundColor: Colors.pink[100],
+      backgroundColor: Colors.blue[100],
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
@@ -177,7 +179,7 @@ class _InfoState extends State<Info> {
                                   '${recentData.dqtq.toString()}%',
                                   style: TextStyle(
                                       fontSize: 35,
-                                      color: Colors.pink,
+                                      color: Colors.blue,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ),
@@ -202,7 +204,7 @@ class _InfoState extends State<Info> {
                           padding: const EdgeInsets.fromLTRB(10, 20, 6, 20),
                           child: Card(
                             elevation: 2,
-                            color: Colors.pink[50],
+                            color: Colors.blue[50],
                             child: SizedBox(
                               width: 220.w,
                               child: Padding(
@@ -246,7 +248,7 @@ class _InfoState extends State<Info> {
                           padding: const EdgeInsets.fromLTRB(10, 20, 6, 20),
                           child: Card(
                             elevation: 2,
-                            color: Colors.pink[50],
+                            color: Colors.blue[50],
                             child: SizedBox(
                               width: 220.w,
                               child: Padding(
@@ -290,7 +292,7 @@ class _InfoState extends State<Info> {
                           padding: const EdgeInsets.fromLTRB(10, 20, 6, 20),
                           child: Card(
                             elevation: 2,
-                            color: Colors.pink[50],
+                            color: Colors.blue[50],
                             child: SizedBox(
                               width: 220.w,
                               child: Padding(
@@ -333,7 +335,7 @@ class _InfoState extends State<Info> {
                           padding: const EdgeInsets.fromLTRB(10, 20, 6, 20),
                           child: Card(
                             elevation: 2,
-                            color: Colors.pink[50],
+                            color: Colors.blue[50],
                             child: SizedBox(
                               width: 220.w,
                               child: Padding(
@@ -377,7 +379,7 @@ class _InfoState extends State<Info> {
                           padding: const EdgeInsets.fromLTRB(10, 20, 10, 20),
                           child: Card(
                             elevation: 2,
-                            color: Colors.pink[50],
+                            color: Colors.blue[50],
                             child: SizedBox(
                               width: 380.w,
                               child: Padding(
@@ -505,7 +507,7 @@ class _InfoState extends State<Info> {
                                   '       ',
                                   style: TextStyle(
                                       fontSize: 35,
-                                      color: Colors.pink,
+                                      color: Colors.blue,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ),
@@ -530,7 +532,7 @@ class _InfoState extends State<Info> {
                           padding: const EdgeInsets.fromLTRB(10, 20, 6, 20),
                           child: Card(
                             elevation: 2,
-                            color: Colors.pink[50],
+                            color: Colors.blue[50],
                             child: SizedBox(
                               width: 220.w,
                               child: Padding(
@@ -542,7 +544,7 @@ class _InfoState extends State<Info> {
                                     CircularProgressIndicator(
                                       valueColor:
                                           new AlwaysStoppedAnimation<Color>(
-                                              Colors.pink[100]),
+                                              Colors.blue[100]),
                                     )
                                   ],
                                 ),
@@ -554,7 +556,7 @@ class _InfoState extends State<Info> {
                           padding: const EdgeInsets.fromLTRB(10, 20, 6, 20),
                           child: Card(
                             elevation: 2,
-                            color: Colors.pink[50],
+                            color: Colors.blue[50],
                             child: SizedBox(
                               width: 220.w,
                               child: Padding(
@@ -566,7 +568,7 @@ class _InfoState extends State<Info> {
                                     CircularProgressIndicator(
                                       valueColor:
                                           new AlwaysStoppedAnimation<Color>(
-                                              Colors.pink[100]),
+                                              Colors.blue[100]),
                                     )
                                   ],
                                 ),
@@ -578,7 +580,7 @@ class _InfoState extends State<Info> {
                           padding: const EdgeInsets.fromLTRB(10, 20, 6, 20),
                           child: Card(
                             elevation: 2,
-                            color: Colors.pink[50],
+                            color: Colors.blue[50],
                             child: SizedBox(
                               width: 220.w,
                               child: Padding(
@@ -590,7 +592,7 @@ class _InfoState extends State<Info> {
                                     CircularProgressIndicator(
                                       valueColor:
                                           new AlwaysStoppedAnimation<Color>(
-                                              Colors.pink[100]),
+                                              Colors.blue[100]),
                                     )
                                   ],
                                 ),
@@ -602,7 +604,7 @@ class _InfoState extends State<Info> {
                           padding: const EdgeInsets.fromLTRB(10, 20, 6, 20),
                           child: Card(
                             elevation: 2,
-                            color: Colors.pink[50],
+                            color: Colors.blue[50],
                             child: SizedBox(
                               width: 220.w,
                               child: Padding(
@@ -614,7 +616,7 @@ class _InfoState extends State<Info> {
                                     CircularProgressIndicator(
                                       valueColor:
                                           new AlwaysStoppedAnimation<Color>(
-                                              Colors.pink[100]),
+                                              Colors.blue[100]),
                                     )
                                   ],
                                 ),
@@ -626,7 +628,7 @@ class _InfoState extends State<Info> {
                           padding: const EdgeInsets.fromLTRB(10, 20, 10, 20),
                           child: Card(
                             elevation: 2,
-                            color: Colors.pink[50],
+                            color: Colors.blue[50],
                             child: SizedBox(
                               width: 380.w,
                               child: Padding(
@@ -638,7 +640,7 @@ class _InfoState extends State<Info> {
                                     CircularProgressIndicator(
                                       valueColor:
                                           new AlwaysStoppedAnimation<Color>(
-                                              Colors.pink[100]),
+                                              Colors.blue[100]),
                                     )
                                   ],
                                 ),

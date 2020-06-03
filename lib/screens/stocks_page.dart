@@ -10,7 +10,7 @@ import 'package:stocks_app/data/stocksData.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_app/data/bseCodesData.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:stocks_app/data/stockDataModel.dart';
+// import 'package:stocks_app/data/stockDataModel.dart';
 
 // ->Globals
 
@@ -40,7 +40,7 @@ class _StocksState extends State<Stocks> {
     for (int b = 0; b < 20; b++) {
       try {
         // Fetching data for each code
-        StockDataModel dataMap = await stock.getdata(
+        StockModel dataMap = await stock.getdata(
           // Extracting Stock Code
           bse_codes[b]
               .toString()
