@@ -23,6 +23,9 @@ Map dataAll = {};
 Map lastDataAll = {};
 List<bool> dataFetched = [];
 
+// Global Refresh Indicator Key
+var refreshKey = GlobalKey<RefreshIndicatorState>();
+
 // Hive Box
 var _box;
 var _fav;
@@ -237,31 +240,41 @@ class _StocksState extends State<Stocks> {
     super.dispose();
   }
 
+  Future<Null> refreshList() async {
+    refreshKey.currentState?.show(atTop: true);
+    await Future.delayed(Duration(seconds: 1));
+    getstock();
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context, width: 720, height: 1440, allowFontScaling: true);
-    return Column(
-      children: <Widget>[
-        Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: SearchBar(editingController, duplicateItems, items)),
-        Expanded(
-          child: Scrollbar(
-            child: GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                childAspectRatio: 0.70,
-                crossAxisCount: 2,
+    return RefreshIndicator(
+      child: Column(
+        children: <Widget>[
+          Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SearchBar(editingController, duplicateItems, items)),
+          Expanded(
+            child: Scrollbar(
+              child: GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  childAspectRatio: 0.70,
+                  crossAxisCount: 2,
+                ),
+                shrinkWrap: true,
+                itemCount: items.length,
+                itemBuilder: (context, position) {
+                  return StockTile(items, position, dataFetched, dataAll,
+                      lastDataAll, graphs, favLoaded);
+                },
               ),
-              shrinkWrap: true,
-              itemCount: items.length,
-              itemBuilder: (context, position) {
-                return StockTile(items, position, dataFetched, dataAll,
-                    lastDataAll, graphs, favLoaded);
-              },
             ),
           ),
-        ),
-      ],
+        ],
+      ),
+      onRefresh: refreshList,
     );
   }
 }
