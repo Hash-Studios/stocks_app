@@ -17,17 +17,20 @@ class StockModelAdapter extends TypeAdapter<StockModel> {
     };
     return StockModel(
       fields[0] as String,
-      (fields[1] as Map)?.cast<String, StockDayModel>(),
+      fields[1] as String,
+      (fields[2] as Map)?.cast<String, StockDayModel>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, StockModel obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(3)
       ..writeByte(0)
       ..write(obj.code)
       ..writeByte(1)
+      ..write(obj.date)
+      ..writeByte(2)
       ..write(obj.stockData);
   }
 }

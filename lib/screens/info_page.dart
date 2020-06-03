@@ -5,6 +5,7 @@ import 'package:stocks_app/ui/stock_graph.dart';
 import 'package:stocks_app/data/stocksData.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive/hive.dart';
+import 'package:intl/intl.dart';
 // import 'package:stocks_app/data/stockDayDataModel.dart';
 // import 'package:stocks_app/data/stockDataModel.dart';
 
@@ -80,6 +81,27 @@ class _InfoState extends State<Info> {
             dataFetched = true;
           },
         );
+        if (_box.get(widget.code).date !=
+            DateFormat("yy-MM-dd").format(DateTime.now())) {
+          StockModel dataMap = await stock.getdata(widget.code);
+          setState(
+            () {
+              data = dataMap;
+              for (var c = 0; c < 30; c++) {
+                dataList.add(
+                  new StockSeries(
+                      date: data.stockData["data$c"].date,
+                      close: data.stockData["data$c"].close),
+                );
+              }
+              recentData = data.stockData["data0"];
+              lastData = data.stockData["data1"];
+              // print(recentData.dqtq);
+              dataFetched = true;
+              _box.put(dataMap.code, dataMap);
+            },
+          );
+        }
       }
       // print(data["data0"].toString());
     } catch (e) {

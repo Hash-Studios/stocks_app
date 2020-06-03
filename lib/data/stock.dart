@@ -10,7 +10,10 @@ class StockModel {
   String code;
 
   @HiveField(1)
+  String date;
+
+  @HiveField(2)
   Map<String, StockDayModel> stockData;
 
-  StockModel(this.code, this.stockData);
+  StockModel(this.code, this.date, this.stockData);
 }

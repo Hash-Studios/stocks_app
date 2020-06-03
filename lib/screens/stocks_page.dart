@@ -10,6 +10,7 @@ import 'package:stocks_app/data/stocksData.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_app/data/bseCodesData.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:intl/intl.dart';
 // import 'package:stocks_app/data/stockDataModel.dart';
 
 // ->Globals
@@ -126,6 +127,69 @@ class _StocksState extends State<Stocks> {
           setState(() {
             dataFetched[b] = true;
           });
+          if (_box
+                  .get(
+                    bse_codes[b]
+                        .toString()
+                        .replaceAll("{", "")
+                        .replaceAll("}", "")
+                        .split(': ')[1]
+                        .toString(),
+                  )
+                  .date !=
+              DateFormat("yy-MM-dd").format(DateTime.now())) {
+            // Fetching data for each code
+            StockModel dataMap = await stock.getdata(
+              // Extracting Stock Code
+              bse_codes[b]
+                  .toString()
+                  .replaceAll("{", "")
+                  .replaceAll("}", "")
+                  .split(': ')[1]
+                  .toString(),
+            );
+
+            // Map<String, StockDayModel> newData = {};
+            // for (var p = 0; p < 30; p++) {
+            //   newData["data$p"] = StockDayModel(
+            //     dataMap.stockData["data$p"].date,
+            //     dataMap.stockData["data$p"].open,
+            //     dataMap.stockData["data$p"].high,
+            //     dataMap.stockData["data$p"].low,
+            //     dataMap.stockData["data$p"].close,
+            //     dataMap.stockData["data$p"].turn,
+            //     dataMap.stockData["data$p"].dqtq,
+            //   );
+            // }
+            // _box.put(dataMap.code, StockModel(dataMap.code, dataMap.stockData));
+            _box.put(dataMap.code, dataMap);
+            print("Written");
+            print(_box.get(dataMap.code));
+
+            setState(
+              () {
+                dataAll["stock$b"] = dataMap.stockData["data0"]; // Latest Data
+                lastDataAll["stock$b"] =
+                    dataMap.stockData["data1"]; // Last Day's Data
+                graphs["stock$b"] =
+                    new List(); // Initialising List to Store Graphs
+              },
+            );
+
+            // Adding Graph for Last 30 Days
+            for (var c = 0; c < 30; c++) {
+              graphs["stock$b"].add(
+                new GridSeries(
+                    date: dataMap.stockData["data$c"].date,
+                    close: dataMap.stockData["data$c"].close),
+              );
+            }
+
+            // Data is Fetched
+            setState(() {
+              dataFetched[b] = true;
+            });
+          }
         }
       } catch (e) {
         print(e);

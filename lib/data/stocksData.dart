@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 // import 'package:stocks_app/data/stockDataModel.dart';
 // import 'package:stocks_app/data/stockDayDataModel.dart';
 import 'package:stocks_app/data/stock.dart';
@@ -55,6 +56,7 @@ class StockData {
       // );
       StockModel totalData = StockModel(
         code,
+        DateFormat("yy-MM-dd").format(DateTime.now()),
         totalData1,
       );
       return totalData;
