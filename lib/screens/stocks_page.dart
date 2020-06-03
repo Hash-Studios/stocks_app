@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:hive/hive.dart';
-import 'package:stocks_app/grid_graph.dart';
-import 'package:stocks_app/searchBar.dart';
-import 'package:stocks_app/stock.dart';
-import 'package:stocks_app/stockTile.dart';
-import 'package:stocks_app/stock_day.dart';
-import 'package:stocks_app/stocksData.dart';
+import 'package:stocks_app/ui/grid_graph.dart';
+import 'package:stocks_app/ui/searchBar.dart';
+import 'package:stocks_app/data/stock.dart';
+import 'package:stocks_app/ui/stockTile.dart';
+import 'package:stocks_app/data/stock_day.dart';
+import 'package:stocks_app/data/stocksData.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:stocks_app/bseCodesData.dart';
+import 'package:stocks_app/data/bseCodesData.dart';
 import 'package:path_provider/path_provider.dart';
-// import 'package:stocks_app/stockDataDayModel.dart';
-import 'package:stocks_app/stockDataModel.dart';
+import 'package:stocks_app/data/stockDataModel.dart';
 
 // ->Globals
 

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:random_color/random_color.dart';
-import 'package:stocks_app/grid_graph.dart';
-import 'package:stocks_app/info_page.dart';
+import 'package:stocks_app/ui/grid_graph.dart';
+import 'package:stocks_app/screens/info_page.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:stocks_app/bseCodesData.dart';
-import 'info_page.dart';
+import 'package:stocks_app/data/bseCodesData.dart';
 
 // ->Globals
 

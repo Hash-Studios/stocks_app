@@ -1,5 +1,5 @@
 import 'package:hive/hive.dart';
-import 'package:stocks_app/stock_day.dart';
+import 'package:stocks_app/data/stock_day.dart';
 
 part 'stock.g.dart';
 

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:stocks_app/stock_graph.dart';
-import 'package:stocks_app/stocksData.dart';
+import 'package:stocks_app/ui/stock_graph.dart';
+import 'package:stocks_app/data/stocksData.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:stocks_app/stockDayDataModel.dart';
-import 'package:stocks_app/stockDataModel.dart';
+import 'package:stocks_app/data/stockDayDataModel.dart';
+import 'package:stocks_app/data/stockDataModel.dart';
 
 StockDataModel data;
 StockDayDataModel recentData;

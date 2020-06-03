@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'stocks_page.dart';
 import 'settings.dart';
-import 'package:stocks_app/custompopupmenu.dart';
+import 'package:stocks_app/ui/custompopupmenu.dart';
 
 class Home extends StatefulWidget {
   Home({Key key, this.title}) : super(key: key);

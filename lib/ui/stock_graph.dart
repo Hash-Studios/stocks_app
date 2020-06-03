@@ -2,7 +2,7 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:stocks_app/stockDayDataModel.dart';
+import 'package:stocks_app/data/stockDayDataModel.dart';
 
 class StockSeries {
   final String date;

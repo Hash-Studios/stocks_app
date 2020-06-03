@@ -1,4 +1,4 @@
-import 'package:stocks_app/stockDayDataModel.dart';
+import 'package:stocks_app/data/stockDayDataModel.dart';
 
 class StockDataModel {
   String code;
